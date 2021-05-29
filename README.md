@@ -1,7 +1,2 @@
-# Chtholly
-
-## How to start
-
-1. generate project using `nb create` .
-2. writing your plugins under `chtholly/plugins` folder.
-3. run your bot using `nb run` .
+# IntelligentIthea
+智能型艾瑟雅（IntelligentIthea）：一个终末三问（末日时在做什么？有没有空？可以来拯救吗？）抽卡游戏qq机器人
