@@ -1,0 +1,355 @@
+{
+	"1": {
+		"name": "兰朵露可",
+		"icon": "💦",
+		"speed": [
+			1,
+			2,
+			2,
+			2,
+			2,
+			1,
+			1,
+			1
+		],
+		"skill": {
+			"1": {
+				"skill_porb": 0.1,
+				"skill_text": "兰朵露可步伐轻盈，向前快进了2步。",
+				"skill_effect": "forward(id,2,position)"
+			},
+			"2": {
+				"skill_porb": 0.1,
+				"skill_text": "“你们很吵”兰朵露可一边说一边前进1步，其他选手乖乖闭嘴沉默1回合。",
+				"skill_effect": "forward(id,1,position)\nn_give_silence(select_all(id),1,silence)"
+			},
+			"3": {
+				"skill_porb": 0.08,
+				"skill_text": "兰朵露可施展魅力，不慌不忙向前2步，其他选手都看呆了暂停1回合。",
+				"skill_effect": "forward(id,2,position)\nn_give_pause(select_all(id),1,pause)"
+			},
+			"4": {
+				"skill_porb": 0.02,
+				"skill_text": "兰朵露可蔑视一笑，露出看垃圾的眼神，前进3步，其他选手倍受打击沉默1回合，暂停1回合。",
+				"skill_effect": "forward(id,3,position)\nn_give_silence(select_all(id),1,silence)\nn_give_pause(select_all(id),1,pause)"
+			}
+		}
+	},
+	"2": {
+		"name": "珂朵莉",
+		"icon": "💍",
+		"speed": [
+			1,
+			1,
+			2,
+			2,
+			1,
+			1,
+			2
+		],
+		"skill": {
+			"1": {
+				"skill_porb": 0.1,
+				"skill_text": "珂朵莉大喊“哦呀”，猛冲3步！喊声太大感到孩子气，自行沉默一回合。",
+				"skill_effect": "forward(id,3,position)\ngive_silence(id,1,silence)"
+			},
+			"2": {
+				"skill_porb": 0.1,
+				"skill_text": "“威廉哪去了……”珂朵莉后退一步去找威廉。",
+				"skill_effect": "backward(id,1,position)\ntext=prob_text(prob_forward(0.5,id,3,position),'“你在这啊，快走啦！”又回头走了3步。','')"
+			},
+			"3": {
+				"skill_porb": 0.08,
+				"skill_text": "前方有黄油蛋糕？！珂朵莉猛冲5步，并休息一回合开始吃蛋糕。",
+				"skill_effect": "forward(id,5,position)\ngive_pause(id,1,pause)"
+			},
+			"4": {
+				"skill_porb": 0.02,
+				"skill_text": "珂朵莉魔力爆发，前进5步，同时将自己以外第一名击退4步。",
+				"skill_effect": "forward(id,5,position)\nbackward(select_fast(position,id),4,position)"
+			}
+		}
+	},
+	"3": {
+		"name": "诺芙特",
+		"icon": "⭐️",
+		"speed": [
+			1,
+			2,
+			2,
+			2,
+			2,
+			1,
+			1
+		],
+		"skill": {
+			"1": {
+				"skill_porb": 0.1,
+				"skill_text": "诺夫特热了热身，前进一步。",
+				"skill_effect": "forward(id,1,position)\ngid=select_random(id)\nforward(gid,1,position)\ntext=f'与诺夫特一同热身的{gid}号选手也前进1步。'"
+			},
+			"2": {
+				"skill_porb": 0.1,
+				"skill_text": "“不好好吃饭可是不行的。”诺夫特把烤肉塞给选手们，自己前进3步，其他全员前进1步。",
+				"skill_effect": "forward(id,3,position)\nn_forward(select_all(id),1,position)"
+			},
+			"3": {
+				"skill_porb": 0.08,
+				"skill_text": "诺夫特看到前方格里克手里的鲜肉派，猛冲了4步。",
+				"skill_effect": "forward(id,4,position)"
+			},
+			"4": {
+				"skill_porb": 0.02,
+				"skill_text": "“小命要紧！”诺夫特使用鼓舞，自身前进5步，其他全员前进2步。",
+				"skill_effect": "forward(id,5,position)\nn_forward(select_all(id),2,position)"
+			}
+		}
+	},
+	"4": {
+		"name": "奈芙莲",
+		"icon": "💤",
+		"speed": [
+			1,
+			2,
+			2,
+			2,
+			2,
+			1,
+			1
+		],
+		"skill": {
+			"1": {
+				"skill_porb": 0.1,
+				"skill_text": "奈芙莲使用了黏人，奈芙莲前进1步，并将自己外第一名拖后了2步。",
+				"skill_effect": "forward(id,1,position)\nbackward(select_fast(position,id),2,position)"
+			},
+			"2": {
+				"skill_porb": 0.1,
+				"skill_text": "“唔，好困。”奈芙莲睡眼惺忪，后退1步。",
+				"skill_effect": "backward(id,1,position)\ngid=select_random(id)\nbackward(gid,2,position)\ntext=f'并将{gid}号选手击退了2步。'"
+			},
+			"3": {
+				"skill_porb": 0.08,
+				"skill_text": "“我是宠物……喵。”其他选手的心被萌化不由自主后退2步，奈芙莲悄悄前进1步。",
+				"skill_effect": "forward(id,1,position)\nn_backward(select_all(id),2,position)"
+			},
+			"4": {
+				"skill_porb": 0.02,
+				"skill_text": "“叫我奈芙莲总长。”奈芙莲突然变身，猛冲了8步！！！",
+				"skill_effect": "forward(id,8,position)"
+			}
+		}
+	},
+	"5": {
+		"name": "威廉",
+		"icon": "🎂",
+		"speed": [
+			1,
+			2,
+			2,
+			2,
+			2,
+			2,
+			1
+		],
+		"skill": {
+			"1": {
+				"skill_porb": 0.1,
+				"skill_text": "威廉使用了“莺赞崩疾”，前进2步。",
+				"skill_effect": "forward(id,2,position)"
+			},
+			"2": {
+				"skill_porb": 0.1,
+				"skill_text": "威廉拿出甜点开始品尝，暂停1回合，",
+				"skill_effect": "give_pause(id,1,pause)\ngid=select_random(id)\ngive_pause(gid,1,pause)\ntext=f'并邀请{gid}号选手一起享用甜点'"
+			},
+			"3": {
+				"skill_porb": 0.09,
+				"skill_text": "威廉使用大招“龙烂劫鼎”，自身前进2步，其他人被震退1步。",
+				"skill_effect": "forward(id,2,position)\nn_backward(select_all(id),1,position)"
+			},
+			"4": {
+				"skill_porb": 0.03,
+				"skill_text": "“亡国禁咒。”威廉大喊一声（虽然无事发生），其他全员被吓退3步并暂停1回合。",
+				"skill_effect": "n_backward(select_all(id),3,position)\nn_give_pause(select_all(id),1,pause)"
+			}
+		}
+	},
+	"6": {
+		"name": "缇亚忒",
+		"icon": "🍀",
+		"speed": [
+			1,
+			2,
+			1,
+			2,
+			1,
+			2,
+			1
+		],
+		"skill": {
+			"1": {
+				"skill_porb": 0.1,
+				"skill_text": "“来一杯咖啡吧！”缇亚忒快跑1步，对自己外第1位递上加了辣椒粉的咖啡使其后退1步。",
+				"skill_effect": "forward(id,1,position)\nbackward(select_fast(position,id),1,position)"
+			},
+			"2": {
+				"skill_porb": 0.1,
+				"skill_text": "“来一杯牛奶吧！”缇亚忒喝下一杯牛奶，前进1步。",
+				"skill_effect": "forward(id,1,position)\ntext=prob_text(prob_forward(0.4,id,3,position),'再来一杯？又额外走了3步。','')"
+			},
+			"3": {
+				"skill_porb": 0.08,
+				"skill_text": "缇亚忒进入羁绊模式，积攒了大量元气，快速前行3步，",
+				"skill_effect": "forward(id,3,position)\ngid=select_random(id)\nbackward(gid,4,position)\ntext=f'并将{gid}号选手击退了4步。'"
+			},
+			"4": {
+				"skill_porb": 0.02,
+				"skill_text": "缇亚忒拿出摩尔宁，前进了4步，下一回合必定进入羁绊模式，其他全员前进1步。",
+				"skill_effect": "forward(id,4,position)\ngive_ub(id,1,ub)\nn_forward(select_all(id),1,position)"
+			}
+		}
+	},
+	"7": {
+		"name": "可蓉",
+		"icon": "🉑",
+		"speed": [
+			1,
+			2,
+			2,
+			1,
+			2,
+			2,
+			1,
+			1
+		],
+		"skill": {
+			"1": {
+				"skill_porb": 0.1,
+				"skill_text": "可蓉使用了锄强扶弱，将自己外第1位向后拉2步，自己前进了1步，并使自己外最末位前进2步。",
+				"skill_effect": "forward(id,1,position)\nfid=select_fast(position,id)\nsid=select_last(position,id)\nbackward(fid,2,position)\nforward(sid,2,position)"
+			},
+			"2": {
+				"skill_porb": 0.1,
+				"skill_text": "可蓉使用了擒拿，将自己外第1位向后拉1步，并暂停1回合。",
+				"skill_effect": "fid=select_fast(position,id)\nbackward(fid,1,position)\ngive_pause(fid,1,pause)"
+			},
+			"3": {
+				"skill_porb": 0.09,
+				"skill_text": "可蓉跳到自己外第1位的选手头上锁喉，与其互换位置后，又前进了1步。",
+				"skill_effect": "fid=select_fast(position,id)\nchange_position(id,fid,position)\nforward(id,1,position)"
+			},
+			"4": {
+				"skill_porb": 0.03,
+				"skill_text": "可蓉使用了无敌风火轮，前进3步，并将自己外第1位撞晕暂停2回合。",
+				"skill_effect": "forward(id,3,position)\ngive_pause(select_fast(position,id),2,pause)"
+			}
+		}
+	},
+	"8": {
+		"name": "菈琪旭",
+		"icon": "🍩",
+		"speed": [
+			1,
+			1,
+			2,
+			2,
+			2,
+			2,
+			1
+		],
+		"skill": {
+			"1": {
+				"skill_porb": 0.1,
+				"skill_text": "菈琪旭拿出美味甜甜圈，诱使自己外第一名后退2步，第二名后退1步，下一回合将会拿出一杯酒。",
+				"skill_effect": "backward(select_number(position,id,2),1,position)\nbackward(select_fast(position,id),2,position)\ngive_ub(id,1,ub)"
+			},
+			"2": {
+				"skill_porb": 0.1,
+				"skill_text": "菈琪旭突然向前冲刺，发现所有人都在注视自己，顿时脸红，暂停一回合，下一回将会拿出一杯酒。",
+				"skill_effect": "forward(id,2,position)\ngive_ub(id,1,ub)\ngive_pause(id,1,pause)"
+			},
+			"3": {
+				"skill_porb": 0.09,
+				"skill_text": "菈琪旭拿出一杯酒，一饮而尽",
+				"skill_effect": "step=2*kan_num\nforward(id,step,position)\nkan_num1=1\ntext=f'前进了{step}步，并且醉意更浓。'\nprint(kan_num1)"
+			},
+			"4": {
+				"skill_porb": 0.03,
+				"skill_text": "菈琪旭彻底喝醉了，歪歪扭扭前进了4步，并且下一回合将继续拿出一杯酒。",
+				"skill_effect": "forward(id,4,position)\ngive_ub(id,1,ub)"
+			}
+		}
+	},
+	"9": {
+		"name": "潘丽宝",
+		"icon": "😈",
+		"speed": [
+			1,
+			2,
+			2,
+			2,
+			2,
+			2,
+			1
+		],
+		"skill": {
+			"1": {
+				"skill_porb": 0.1,
+				"skill_text": "赛跑多无聊啊。潘丽宝将自己外第1名和第2名劝退2步。",
+				"skill_effect": "backward(select_number(position,id,2),2,position)\nbackward(select_fast(position,id),2,position)"
+			},
+			"2": {
+				"skill_porb": 0.1,
+				"skill_text": "小恶魔的提议，潘丽宝前进2步，并怂恿自己外最后1名前进2步。",
+				"skill_effect": "forward(id,2,position)\nforward(select_last(position,id),2,position)"
+			},
+			"3": {
+				"skill_porb": 0.08,
+				"skill_text": "潘丽宝使用了大招剑技乱斗，潘丽宝前进2步，自己外第1名后退3步，第2名后退4步。",
+				"skill_effect": "forward(id,2,position)\nbackward(select_number(position,id,2),4,position)\nbackward(select_fast(position,id),3,position)"
+			},
+			"4": {
+				"skill_porb": 0.02,
+				"skill_text": "对好心无比的人的必杀绝招！潘丽宝前进3步，全体后退1步，自己外第1名额外后退4步。",
+				"skill_effect": "forward(id,3,position)\nn_backward(select_all(id),1,position)\nbackward(select_fast(position,id),4,position)"
+			}
+		}
+	},
+	"10": {
+		"name": "艾陆可",
+		"icon": "🍼",
+		"speed": [
+			1,
+			2,
+			2,
+			2,
+			2,
+			1,
+			1,
+			1
+		],
+		"skill": {
+			"1": {
+				"skill_porb": 0.1,
+				"skill_text": "“我很憧憬那个人。”艾陆可轻声细语着前进2步，其憧憬者前进1步。",
+				"skill_effect": "forward(id,2,position)\nforward(kokoro_num,1,position)"
+			},
+			"2": {
+				"skill_porb": 0.1,
+				"skill_text": "“我就是珂朵莉。”艾陆可前进了4步，",
+				"skill_effect": "forward(id,4,position)\ntext=prob_text(prob_backward(0.75,id,3,position),'“啊啊，咬到舌头了。”艾陆可又灰溜溜的后退了3步。','“但珂朵莉不是我。”')"
+			},
+			"3": {
+				"skill_porb": 0.09,
+				"skill_text": "艾陆可使用大招“世界和平”，艾陆可前进4步，憧憬者前进2步，其他全体前进1步。",
+				"skill_effect": "forward(id,4,position)\nforward(kokoro_num,1,position)\nn_forward(select_all(id),1,position)"
+			},
+			"4": {
+				"skill_porb": 0.02,
+				"skill_text": "艾陆可施展了星神权能，前进4步，并使憧憬者下回合必定使用大招。",
+				"skill_effect": "forward(id,4,position)\ngive_ub(kokoro_num,1,ub)"
+			}
+		}
+	}
+}

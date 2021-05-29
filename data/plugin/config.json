@@ -1,0 +1,587 @@
+{
+    "role": {
+        "role_data": {
+            "1-1": {
+                "url": "file:///C:/Users/Administrator/Desktop/go-cqhttp/Ithea/data/image/七星/1-1.jpg",
+                "grade": 1
+            },
+            "1-2": {
+                "url": "file:///C:/Users/Administrator/Desktop/go-cqhttp/Ithea/data/image/七星/1-2.jpg",
+                "grade": 1
+            },
+            "1-3": {
+                "url": "file:///C:/Users/Administrator/Desktop/go-cqhttp/Ithea/data/image/七星/1-3.jpg",
+                "grade": 1
+            },
+            "1-4": {
+                "url": "file:///C:/Users/Administrator/Desktop/go-cqhttp/Ithea/data/image/七星/1-4.jpg",
+                "grade": 1
+            },
+            "1-5": {
+                "url": "file:///C:/Users/Administrator/Desktop/go-cqhttp/Ithea/data/image/七星/1-5.jpg",
+                "grade": 1
+            },
+            "1-6": {
+                "url": "file:///C:/Users/Administrator/Desktop/go-cqhttp/Ithea/data/image/七星/1-6.jpg",
+                "grade": 1
+            },
+            "1-7": {
+                "url": "file:///C:/Users/Administrator/Desktop/go-cqhttp/Ithea/data/image/七星/1-7.jpg",
+                "grade": 1
+            },
+            "1-8": {
+                "url": "file:///C:/Users/Administrator/Desktop/go-cqhttp/Ithea/data/image/七星/1-8.jpg",
+                "grade": 1
+            },
+            "1-9": {
+                "url": "file:///C:/Users/Administrator/Desktop/go-cqhttp/Ithea/data/image/七星/1-9.jpg",
+                "grade": 1
+            },
+            "1-10": {
+                "url": "file:///C:/Users/Administrator/Desktop/go-cqhttp/Ithea/data/image/七星/1-10.jpg",
+                "grade": 1
+            },
+            "1-11": {
+                "url": "file:///C:/Users/Administrator/Desktop/go-cqhttp/Ithea/data/image/七星/1-11.jpg",
+                "grade": 1
+            },
+            "1-12": {
+                "url": "file:///C:/Users/Administrator/Desktop/go-cqhttp/Ithea/data/image/七星/1-12.jpg",
+                "grade": 1
+            },
+            "1-13": {
+                "url": "file:///C:/Users/Administrator/Desktop/go-cqhttp/Ithea/data/image/七星/1-13.jpg",
+                "grade": 1
+            },
+            "1-14": {
+                "url": "file:///C:/Users/Administrator/Desktop/go-cqhttp/Ithea/data/image/七星/1-14.jpg",
+                "grade": 1
+            },
+            "1-15": {
+                "url": "file:///C:/Users/Administrator/Desktop/go-cqhttp/Ithea/data/image/七星/1-15.jpg",
+                "grade": 1
+            },
+            "1-16": {
+                "url": "file:///C:/Users/Administrator/Desktop/go-cqhttp/Ithea/data/image/七星/1-16.jpg",
+                "grade": 1
+            },
+            "1-17": {
+                "url": "file:///C:/Users/Administrator/Desktop/go-cqhttp/Ithea/data/image/七星/1-17.jpg",
+                "grade": 1
+            },
+            "1-18": {
+                "url": "file:///C:/Users/Administrator/Desktop/go-cqhttp/Ithea/data/image/七星/1-18.jpg",
+                "grade": 1
+            },
+            "1-19": {
+                "url": "file:///C:/Users/Administrator/Desktop/go-cqhttp/Ithea/data/image/七星/1-19.jpg",
+                "grade": 1
+            },
+            "1-20": {
+                "url": "file:///C:/Users/Administrator/Desktop/go-cqhttp/Ithea/data/image/七星/1-20.jpg",
+                "grade": 1
+            },
+            "1-21": {
+                "url": "file:///C:/Users/Administrator/Desktop/go-cqhttp/Ithea/data/image/七星/1-21.jpg",
+                "grade": 1
+            },
+            "1-22": {
+                "url": "file:///C:/Users/Administrator/Desktop/go-cqhttp/Ithea/data/image/七星/1-22.jpg",
+                "grade": 1
+            },
+            "2-1": {
+                "url": "file:///C:/Users/Administrator/Desktop/go-cqhttp/Ithea/data/image/六星/2-1.jpg",
+                "grade": 2
+            },
+            "2-2": {
+                "url": "file:///C:/Users/Administrator/Desktop/go-cqhttp/Ithea/data/image/六星/2-2.jpg",
+                "grade": 2
+            },
+            "2-3": {
+                "url": "file:///C:/Users/Administrator/Desktop/go-cqhttp/Ithea/data/image/六星/2-3.jpg",
+                "grade": 2
+            },
+            "2-4": {
+                "url": "file:///C:/Users/Administrator/Desktop/go-cqhttp/Ithea/data/image/六星/2-4.jpg",
+                "grade": 2
+            },
+            "2-5": {
+                "url": "file:///C:/Users/Administrator/Desktop/go-cqhttp/Ithea/data/image/六星/2-5.jpg",
+                "grade": 2
+            },
+            "2-6": {
+                "url": "file:///C:/Users/Administrator/Desktop/go-cqhttp/Ithea/data/image/六星/2-6.jpg",
+                "grade": 2
+            },
+            "2-7": {
+                "url": "file:///C:/Users/Administrator/Desktop/go-cqhttp/Ithea/data/image/六星/2-7.jpg",
+                "grade": 2
+            },
+            "2-8": {
+                "url": "file:///C:/Users/Administrator/Desktop/go-cqhttp/Ithea/data/image/六星/2-8.jpg",
+                "grade": 2
+            },
+            "2-9": {
+                "url": "file:///C:/Users/Administrator/Desktop/go-cqhttp/Ithea/data/image/六星/2-9.jpg",
+                "grade": 2
+            },
+            "2-10": {
+                "url": "file:///C:/Users/Administrator/Desktop/go-cqhttp/Ithea/data/image/六星/2-10.jpg",
+                "grade": 2
+            },
+            "2-11": {
+                "url": "file:///C:/Users/Administrator/Desktop/go-cqhttp/Ithea/data/image/六星/2-11.jpg",
+                "grade": 2
+            },
+            "2-12": {
+                "url": "file:///C:/Users/Administrator/Desktop/go-cqhttp/Ithea/data/image/六星/2-12.jpg",
+                "grade": 2
+            },
+            "2-13": {
+                "url": "file:///C:/Users/Administrator/Desktop/go-cqhttp/Ithea/data/image/六星/2-13.jpg",
+                "grade": 2
+            },
+            "2-14": {
+                "url": "file:///C:/Users/Administrator/Desktop/go-cqhttp/Ithea/data/image/六星/2-14.jpg",
+                "grade": 2
+            },
+            "2-15": {
+                "url": "file:///C:/Users/Administrator/Desktop/go-cqhttp/Ithea/data/image/六星/2-15.jpg",
+                "grade": 2
+            },
+            "2-16": {
+                "url": "file:///C:/Users/Administrator/Desktop/go-cqhttp/Ithea/data/image/六星/2-16.jpg",
+                "grade": 2
+            },
+            "2-17": {
+                "url": "file:///C:/Users/Administrator/Desktop/go-cqhttp/Ithea/data/image/六星/2-17.jpg",
+                "grade": 2
+            },
+            "2-18": {
+                "url": "file:///C:/Users/Administrator/Desktop/go-cqhttp/Ithea/data/image/六星/2-18.jpg",
+                "grade": 2
+            },
+            "2-19": {
+                "url": "file:///C:/Users/Administrator/Desktop/go-cqhttp/Ithea/data/image/六星/2-19.jpg",
+                "grade": 2
+            },
+            "2-20": {
+                "url": "file:///C:/Users/Administrator/Desktop/go-cqhttp/Ithea/data/image/六星/2-20.jpg",
+                "grade": 2
+            },
+            "2-21": {
+                "url": "file:///C:/Users/Administrator/Desktop/go-cqhttp/Ithea/data/image/六星/2-21.jpg",
+                "grade": 2
+            },
+            "2-22": {
+                "url": "file:///C:/Users/Administrator/Desktop/go-cqhttp/Ithea/data/image/六星/2-22.jpg",
+                "grade": 2
+            },
+            "2-23": {
+                "url": "file:///C:/Users/Administrator/Desktop/go-cqhttp/Ithea/data/image/六星/2-23.jpg",
+                "grade": 2
+            },
+            "2-24": {
+                "url": "file:///C:/Users/Administrator/Desktop/go-cqhttp/Ithea/data/image/六星/2-24.jpg",
+                "grade": 2
+            },
+            "3-1": {
+                "url": "file:///C:/Users/Administrator/Desktop/go-cqhttp/Ithea/data/image/五星/3-1.jpg",
+                "grade": 3
+            },
+            "3-2": {
+                "url": "file:///C:/Users/Administrator/Desktop/go-cqhttp/Ithea/data/image/五星/3-2.jpg",
+                "grade": 3
+            },
+            "3-3": {
+                "url": "file:///C:/Users/Administrator/Desktop/go-cqhttp/Ithea/data/image/五星/3-3.jpg",
+                "grade": 3
+            },
+            "3-4": {
+                "url": "file:///C:/Users/Administrator/Desktop/go-cqhttp/Ithea/data/image/五星/3-4.jpg",
+                "grade": 3
+            },
+            "3-5": {
+                "url": "file:///C:/Users/Administrator/Desktop/go-cqhttp/Ithea/data/image/五星/3-5.jpg",
+                "grade": 3
+            },
+            "3-6": {
+                "url": "file:///C:/Users/Administrator/Desktop/go-cqhttp/Ithea/data/image/五星/3-6.jpg",
+                "grade": 3
+            },
+            "3-7": {
+                "url": "file:///C:/Users/Administrator/Desktop/go-cqhttp/Ithea/data/image/五星/3-7.jpg",
+                "grade": 3
+            },
+            "3-8": {
+                "url": "file:///C:/Users/Administrator/Desktop/go-cqhttp/Ithea/data/image/五星/3-8.jpg",
+                "grade": 3
+            },
+            "3-9": {
+                "url": "file:///C:/Users/Administrator/Desktop/go-cqhttp/Ithea/data/image/五星/3-9.jpg",
+                "grade": 3
+            },
+            "3-10": {
+                "url": "file:///C:/Users/Administrator/Desktop/go-cqhttp/Ithea/data/image/五星/3-10.jpg",
+                "grade": 3
+            },
+            "3-11": {
+                "url": "file:///C:/Users/Administrator/Desktop/go-cqhttp/Ithea/data/image/五星/3-11.jpg",
+                "grade": 3
+            },
+            "3-12": {
+                "url": "file:///C:/Users/Administrator/Desktop/go-cqhttp/Ithea/data/image/五星/3-12.jpg",
+                "grade": 3
+            },
+            "3-13": {
+                "url": "file:///C:/Users/Administrator/Desktop/go-cqhttp/Ithea/data/image/五星/3-13.jpg",
+                "grade": 3
+            },
+            "3-14": {
+                "url": "file:///C:/Users/Administrator/Desktop/go-cqhttp/Ithea/data/image/五星/3-14.jpg",
+                "grade": 3
+            },
+            "3-15": {
+                "url": "file:///C:/Users/Administrator/Desktop/go-cqhttp/Ithea/data/image/五星/3-15.jpg",
+                "grade": 3
+            },
+            "3-16": {
+                "url": "file:///C:/Users/Administrator/Desktop/go-cqhttp/Ithea/data/image/五星/3-16.jpg",
+                "grade": 3
+            },
+            "3-17": {
+                "url": "file:///C:/Users/Administrator/Desktop/go-cqhttp/Ithea/data/image/五星/3-17.jpg",
+                "grade": 3
+            },
+            "3-18": {
+                "url": "file:///C:/Users/Administrator/Desktop/go-cqhttp/Ithea/data/image/五星/3-18.jpg",
+                "grade": 3
+            },
+            "3-19": {
+                "url": "file:///C:/Users/Administrator/Desktop/go-cqhttp/Ithea/data/image/五星/3-19.jpg",
+                "grade": 3
+            },
+            "3-20": {
+                "url": "file:///C:/Users/Administrator/Desktop/go-cqhttp/Ithea/data/image/五星/3-20.jpg",
+                "grade": 3
+            },
+            "3-21": {
+                "url": "file:///C:/Users/Administrator/Desktop/go-cqhttp/Ithea/data/image/五星/3-21.jpg",
+                "grade": 3
+            },
+            "3-22": {
+                "url": "file:///C:/Users/Administrator/Desktop/go-cqhttp/Ithea/data/image/五星/3-22.jpg",
+                "grade": 3
+            },
+            "3-23": {
+                "url": "file:///C:/Users/Administrator/Desktop/go-cqhttp/Ithea/data/image/五星/3-23.jpg",
+                "grade": 3
+            },
+            "3-24": {
+                "url": "file:///C:/Users/Administrator/Desktop/go-cqhttp/Ithea/data/image/五星/3-24.jpg",
+                "grade": 3
+            },
+            "3-25": {
+                "url": "file:///C:/Users/Administrator/Desktop/go-cqhttp/Ithea/data/image/五星/3-25.jpg",
+                "grade": 3
+            },
+            "3-26": {
+                "url": "file:///C:/Users/Administrator/Desktop/go-cqhttp/Ithea/data/image/五星/3-26.jpg",
+                "grade": 3
+            },
+            "3-27": {
+                "url": "file:///C:/Users/Administrator/Desktop/go-cqhttp/Ithea/data/image/五星/3-27.jpg",
+                "grade": 3
+            },
+            "3-28": {
+                "url": "file:///C:/Users/Administrator/Desktop/go-cqhttp/Ithea/data/image/五星/3-28.jpg",
+                "grade": 3
+            },
+            "3-29": {
+                "url": "file:///C:/Users/Administrator/Desktop/go-cqhttp/Ithea/data/image/五星/3-29.jpg",
+                "grade": 3
+            },
+            "3-30": {
+                "url": "file:///C:/Users/Administrator/Desktop/go-cqhttp/Ithea/data/image/五星/3-30.jpg",
+                "grade": 3
+            },
+            "3-31": {
+                "url": "file:///C:/Users/Administrator/Desktop/go-cqhttp/Ithea/data/image/五星/3-31.jpg",
+                "grade": 3
+            },
+            "3-32": {
+                "url": "file:///C:/Users/Administrator/Desktop/go-cqhttp/Ithea/data/image/五星/3-32.jpg",
+                "grade": 3
+            }
+        }
+    },
+    "number": {
+        "1-1": "奈芙莲-残相",
+        "1-2": "悠长夏日",
+        "1-3": "珂朵莉-元旦",
+        "1-4": "珂朵莉-圣诞",
+        "1-5": "珂朵莉-永别",
+        "1-6": "珂朵莉-繁花",
+        "1-7": "珂朵莉-珠玉",
+        "1-8": "缇亚忒-决意",
+        "1-9": "艾瑟雅-轮回",
+        "1-10": "艾陆可-星神",
+        "1-11": "莉莉娅-公主",
+        "1-12": "菈琪旭-祈祷",
+        "1-13": "费奥多尔-落幕",
+        "1-14": "珂朵莉-白无垢",
+        "1-15": "威廉-指间沙",
+        "1-16": "阿蒂莱德-圣剑调音师",
+        "1-17": "棉花糖-往昔",
+        "1-18": "苹果-往昔",
+        "1-19": "奈芙莲-破碎世界",
+        "1-20": "兰朵露可-静好",
+        "1-21": "珂朵莉-碧空丽影",
+        "1-22": "艾瑟雅-希翼",
+        "2-1": "兰朵露可-魔法少女",
+        "2-2": "可蓉-玩耍",
+        "2-3": "奈芙莲-魔法少女",
+        "2-4": "妮戈兰-温柔可人的大姐姐",
+        "2-5": "缇亚忒-童年",
+        "2-6": "潘丽宝-勇者",
+        "2-7": "爱尔梅莉亚-望月叹息",
+        "2-8": "珂朵莉-执剑",
+        "2-9": "珂朵莉-魔法少女",
+        "2-10": "艾瑟雅-魔法少女",
+        "2-11": "莉艾尔-棉花糖",
+        "2-12": "菈琪旭-家务能手",
+        "2-13": "诺芙特-魔法少女",
+        "2-14": "珂朵莉-潮流女孩",
+        "2-15": "史旺-极星大术士",
+        "2-16": "艾瑟雅-书籍",
+        "2-17": "菲儿-城市拥护者",
+        "2-18": "格里克-人生赢家",
+        "2-19": "珂朵莉-千羽",
+        "2-20": "莉莉娅-出鞘",
+        "2-21": "玛尔歌-假面",
+        "2-22": "奈芙莲-乖巧",
+        "2-23": "诺芙特-琴键",
+        "2-24": "艾陆可-贪吃鬼",
+        "3-1": "瑟尼欧里斯",
+        "3-2": "瓦尔卡里斯",
+        "3-3": "印萨尼亚",
+        "3-4": "赫斯托利亚",
+        "3-5": "迪斯佩拉提奥",
+        "3-6": "帕西瓦尔",
+        "3-7": "布尔加特里欧",
+        "3-8": "车前草",
+        "3-9": "虎尾草",
+        "3-10": "兰朵露可",
+        "3-11": "可蓉",
+        "3-12": "史旺-大贤者",
+        "3-13": "奈芙莲",
+        "3-14": "妮戈兰",
+        "3-15": "威廉",
+        "3-16": "缇亚忒",
+        "3-17": "格里克",
+        "3-18": "潘丽宝",
+        "3-19": "灰岩皮",
+        "3-20": "爱尔梅莉亚",
+        "3-21": "珂朵莉",
+        "3-22": "艾瑟雅",
+        "3-23": "莉莉娅",
+        "3-24": "菈琪旭",
+        "3-25": "诺芙特",
+        "3-26": "阿尔米塔",
+        "3-27": "巴洛尼-一等武官",
+        "3-28": "盖亚-侍者",
+        "3-29": "骑士团",
+        "3-30": "蛙面族-好人",
+        "3-31": "紫小鬼-一等技官",
+        "3-32": "自动人偶-警官"
+    },
+    "rules": {
+        "weights": {
+            "draw": {
+                "1-1": 0.04,
+                "1-2": 0.04,
+                "1-3": 0.1,
+                "1-4": 0.09,
+                "1-5": 0.05,
+                "1-6": 0.06,
+                "1-7": 0.07,
+                "1-8": 0.1,
+                "1-9": 0.08,
+                "1-10": 0.06,
+                "1-11": 0.07,
+                "1-12": 0.06,
+                "1-13": 0.1,
+                "1-14": 0.04,
+                "1-15": 0.06,
+                "1-16": 0.04,
+                "1-17": 0.08,
+                "1-18": 0.08,
+                "1-19": 0.09,
+                "1-20": 0.05,
+                "1-21": 0.06,
+                "1-22": 0.99,
+                "2-1": 0.35,
+                "2-2": 0.36,
+                "2-3": 0.23,
+                "2-4": 0.4,
+                "2-5": 0.23,
+                "2-6": 0.34,
+                "2-7": 0.37,
+                "2-8": 0.24,
+                "2-9": 0.31,
+                "2-10": 0.27,
+                "2-11": 0.25,
+                "2-12": 0.28,
+                "2-13": 0.3,
+                "2-14": 0.22,
+                "2-15": 0.45,
+                "2-16": 0.25,
+                "2-17": 0.42,
+                "2-18": 0.37,
+                "2-19": 0.27,
+                "2-20": 0.26,
+                "2-21": 0.34,
+                "2-22": 0.33,
+                "2-23": 0.29,
+                "2-24": 0.3,
+                "3-10": 0.73,
+                "3-3": 0.88,
+                "3-11": 0.77,
+                "3-12": 0.87,
+                "3-13": 0.71,
+                "3-14": 0.76,
+                "3-15": 0.7,
+                "3-7": 0.89,
+                "3-6": 0.9,
+                "3-16": 0.85,
+                "3-17": 0.85,
+                "3-18": 0.84,
+                "3-19": 0.89,
+                "3-20": 0.8,
+                "3-21": 0.7,
+                "3-1": 0.74,
+                "3-2": 0.81,
+                "3-22": 0.7,
+                "3-23": 0.78,
+                "3-24": 0.79,
+                "3-25": 0.8,
+                "3-4": 0.82,
+                "3-5": 0.81,
+                "3-26": 0.76,
+                "3-8": 0.86,
+                "3-9": 0.86,
+                "3-27": 0.79,
+                "3-28": 0.83,
+                "3-29": 0.9,
+                "3-30": 0.89,
+                "3-31": 0.81,
+                "3-32": 0.83
+            },
+            "compose": {
+                "grade_1": {
+                    "1-1": 0.04,
+                    "1-2": 0.04,
+                    "1-3": 0.12,
+                    "1-4": 0.17,
+                    "1-5": 0.15,
+                    "1-6": 0.06,
+                    "1-7": 0.07,
+                    "1-8": 0.1,
+                    "1-9": 0.08,
+                    "1-10": 0.06,
+                    "1-11": 0.1,
+                    "1-12": 0.06,
+                    "1-13": 0.13,
+                    "1-14": 0.04,
+                    "1-15": 0.14,
+                    "1-16": 0.04,
+                    "1-17": 0.12,
+                    "1-18": 0.12,
+                    "1-19": 0.07,
+                    "1-20": 0.15,
+                    "1-21": 0.11,
+                    "1-22": 0.13
+                },
+                "grade_2": {
+                    "2-1": 0.3,
+                    "2-2": 0.31,
+                    "2-3": 0.23,
+                    "2-4": 0.37,
+                    "2-5": 0.38,
+                    "2-6": 0.28,
+                    "2-7": 0.32,
+                    "2-8": 0.4,
+                    "2-9": 0.32,
+                    "2-10": 0.27,
+                    "2-11": 0.33,
+                    "2-12": 0.36,
+                    "2-13": 0.26,
+                    "2-14": 0.23,
+                    "2-15": 0.34,
+                    "2-16": 0.25,
+                    "2-17": 0.42,
+                    "2-18": 0.37,
+                    "2-19": 0.27,
+                    "2-20": 0.26,
+                    "2-21": 0.34,
+                    "2-22": 0.33,
+                    "2-23": 0.29,
+                    "2-24": 0.3
+                },
+                "grade_3": {
+                    "3-10": 0.75,
+                    "3-3": 0.79,
+                    "3-11": 0.8,
+                    "3-12": 0.73,
+                    "3-13": 0.74,
+                    "3-14": 0.85,
+                    "3-15": 0.7,
+                    "3-7": 0.77,
+                    "3-6": 0.83,
+                    "3-16": 0.75,
+                    "3-17": 0.87,
+                    "3-18": 0.88,
+                    "3-19": 0.78,
+                    "3-20": 0.84,
+                    "3-21": 0.82,
+                    "3-1": 0.83,
+                    "3-2": 0.81,
+                    "3-22": 0.8,
+                    "3-23": 0.9,
+                    "3-24": 0.79,
+                    "3-25": 0.74,
+                    "3-4": 0.77,
+                    "3-5": 0.83,
+                    "3-26": 0.9,
+                    "3-8": 0.86,
+                    "3-9": 0.86,
+                    "3-27": 0.79,
+                    "3-28": 0.83,
+                    "3-29": 0.9,
+                    "3-30": 0.89,
+                    "3-31": 0.81,
+                    "3-32": 0.83
+                }
+            }
+        },
+        "settings": {
+            "length": 76,
+            "season": 4,
+            "drawcard_times": 3,
+            "drawcard_cd": 10,
+            "sign_in_EXP": 10,
+            "sign_in_coin": 5,
+            "one_grade": "准路人",
+            "two_grade": "准萌新",
+            "three_grade": "准珂迷",
+            "four_grade": "准勇者",
+            "five_grade": "准珂学家",
+            "one_grade_EXP": 0,
+            "two_grade_EXP": 100,
+            "three_grade_EXP": 500,
+            "four_grade_EXP": 5000,
+            "five_grade_EXP": 10000,
+            "season_name":{"s1":"68浮岛","s2":"天上之森","s3":"碧空莉影","s4":"终末回声"}
+        }
+    }
+}
