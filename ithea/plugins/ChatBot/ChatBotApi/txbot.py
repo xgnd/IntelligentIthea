@@ -78,8 +78,8 @@ class TXBot:
 
 async def test():
     # 换成你的
-    app_id = 2156873651
-    appkey = 'qGdFGXbdyf1sN5cP'
+    app_id = 111
+    appkey = ''
     session = '404'
     bot = TXBot(app_id=app_id, appkey=appkey, session=session)
     while True:
