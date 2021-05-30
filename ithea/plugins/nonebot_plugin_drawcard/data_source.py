@@ -1,19 +1,8 @@
-"""
-    <<<  温馨提示  >>>
-
-    这段代码大部分是在结合框架之前写的
-    所以写的特别乱，特别恶心
-    等有时间再改
-
-    谨慎观看
-
-"""
 import asyncio
 import json
 import os
 import random
 import shutil
-# import time
 from collections import OrderedDict
 from datetime import date, datetime
 
@@ -842,15 +831,3 @@ def dict_reduce(dict_1, dict_2) -> dict:
         if re_dict[i] == 0:
             re_dict.pop(i)
     return re_dict
-
-
-# starttime = time.time()
-# d = DrawCardRule(111, 2741584344)
-# d.warehouse_pic_composition({"珂朵莉":1,"艾瑟雅":2})
-# endtime = time.time()
-# print(endtime - starttime)
-# tasks = [
-#     asyncio.ensure_future(d.grade_certificate_composition(2))
-# ]
-# loop = asyncio.get_event_loop()
-# print(loop.run_until_complete(asyncio.wait(tasks)))
