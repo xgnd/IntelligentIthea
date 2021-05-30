@@ -1,7 +1,8 @@
 # 智能型艾瑟雅（IntelligentIthea）
-<div align=center><img src="https://app.xgnd.net/4_G7WH4NB3WX_8J_HQ4R9_J.png" width="20%"/></div>
+<div align=center><img src="https://app.xgnd.net/4_G7WH4NB3WX_8J_HQ4R9_J.png" width="20%"/>
 
 **智能型艾瑟雅（IntelligentIthea）：一个终末三问（末日时在做什么？有没有空？可以来拯救吗？）抽卡游戏qq机器人**
+</div>
 
 >**本机器人基于[NoneBot2](https://github.com/nonebot/nonebot2)制作，衷心服务于每一位热爱珂学的珂学家！**  
 >**十分感谢各位开发组的小伙伴：青风光翼（285984384）、西瓜nd（2741584344）、回响（2769640073）**  
@@ -28,7 +29,7 @@
 ### 5、点歌 [歌曲名]
 #### 此为原插件[songpicker2](https://github.com/maxesisn/nonebot_plugin_songpicker2)稍加改动而成。玩家可以通过输入“点歌”+空格+歌曲名完成点歌。仅支持网易云音乐的点歌（因为实在找不到其他音乐平台的接口或接口经常失灵）
 ### 6、赛跑
-#### 由[Pcr_Run](https://github.com/Rs794613/PcrRun)魔改而来。一个赛跑下注的小游戏，玩家可以发起赛跑并进行墨鱼币下注。注：由于nonebot2更新后的新特性，导致赛跑的发起人无法参与下注
+#### 由[Pcr_Run](https://github.com/Rs794613/PcrRun)魔改而来。一个赛跑下注的小游戏，玩家可以发起赛跑并进行墨鱼币下注。注：nonebot2更新后的新特性，导致赛跑的发起人无法参与下注
 ### 7、闲聊
 #### 此为原插件[ELFChatBot](https://github.com/Quan666/ELFChatBot)稍加改动而成。玩家可在群里@机器人发起会话，发送“再见”结束会话或通过私聊直接进行闲聊
 ## 用法
