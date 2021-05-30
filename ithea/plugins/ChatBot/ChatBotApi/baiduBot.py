@@ -14,7 +14,7 @@ class BaiduBot:
     _token_url = 'https://aip.baidubce.com/oauth/2.0/token?grant_type=client_credentials&client_id={}&client_secret={}'
     _API_Key = ''  # API Key
     _Secret_Key = ''  # Secret Key
-    _bot_id = 'S46664'  # 机器人 ID（S开头）
+    _bot_id = 'S666666666'  # 机器人 ID（S开头）
     _session = '10000'  # 会话标识（应用内唯一）
     _Proxy = None
     _client = None
@@ -118,9 +118,9 @@ class BaiduBot:
 
 async def test():
     # 换成你的
-    API_Key = "jowcMyg049RltfKoObl12Gxt"
-    Secret_Key = 'sdsU8PAyyKTse3i1ZFhCz4zGfdpsn3oB'
-    bot_id = 'S46664'
+    API_Key = ""
+    Secret_Key = ''
+    bot_id = ''
     session = '100000'
     bot = BaiduBot(API_Key=API_Key, Secret_Key=Secret_Key, bot_id=bot_id, session=session)
     while True:
