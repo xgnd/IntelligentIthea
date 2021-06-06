@@ -33,4 +33,10 @@
 ### 7、闲聊
 #### 此为原插件[ELFChatBot](https://github.com/Quan666/ELFChatBot)稍加改动而成。玩家可在群里@机器人发起会话，发送“再见”结束会话或通过私聊直接进行闲聊
 ## 用法
-### 请参考[NoneBot2指南](https://v2.nonebot.dev/guide/)
+### 官方机器人环境（仅供参考）：
+- #### 语言：python 3.8.5
+- #### 框架：[nonebot 2.0.0a13.post1](https://github.com/nonebot/nonebot2)
+- #### QQ协议端：[go-cqhttp v1.0.0-beta3](https://github.com/Mrs4s/go-cqhttp)
+- #### 服务器：Windows Server 2016 64位数据中心版
+### 部署：
+#### 请参考[NoneBot2指南](https://v2.nonebot.dev/guide/)
