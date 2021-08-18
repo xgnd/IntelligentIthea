@@ -274,6 +274,7 @@ async def handle_name(bot: Bot, event: Event, state: T_State):
             await show.finish("你尚未拥有该角色哟")
         role_url = get_image(number)
         role_grade = get_grade(number)
+        role_introduction = get_introduction(number)
         if role_grade == 1:
             role_grade = "超稀有"
         elif role_grade == 2:
@@ -281,8 +282,12 @@ async def handle_name(bot: Bot, event: Event, state: T_State):
         elif role_grade == 3:
             role_grade = "普通"
         image = MessageSegment.image(file=role_url)
-        msg = MessageSegment.at(event.user_id) + "嘿咻~{name}给您呈上".format(
-            name=name) + "\n" + image + "\n" + "名字：" + name + "\n" + "等级：" + role_grade
+        if not role_introduction:
+            msg = MessageSegment.at(event.user_id) + "嘿咻~{name}给您呈上".format(
+                name=name) + "\n" + image + "\n" + "名字：" + name + "\n" + "等级：" + role_grade
+        else:
+            msg = MessageSegment.at(event.user_id) + "嘿咻~{name}给您呈上".format(
+                name=name) + "\n" + image + "\n" + role_introduction + "\n" + "------------------------------" + "\n" + "名字：" + name + "\n" + "等级：" + role_grade
 
         # 可能会跟一张图
         if random.choices([True, False], [0.2, 0.7])[0]:
@@ -328,7 +333,7 @@ async def role_list_handler(bot: Bot, event: Event):
 
             msg = MessageSegment.face(99) + "◇━卡牌列表━◇" + \
                 MessageSegment.face(99) + msg
-            await menu.finish(msg)
+            await role_list.finish(msg)
 
 role_number = on_startswith("编号图", permission=GROUP, priority=2, block=True)
 
@@ -340,17 +345,36 @@ async def role_number_handler(bot: Bot, event: Event):
             image = get_number_pic()
             msg = MessageSegment.face(99) + "◇━编号图━◇" + \
                 MessageSegment.face(99) + image + "角色图上为对应编号，编号可代替角色名字使用哟~"
-            await menu.finish(msg)
+            await role_number.finish(msg)
 
-dialogue = on_startswith("珂学", permission=GROUP, priority=2, block=True)
+personal_info = on_startswith("个人信息", permission=GROUP, priority=2, block=True)
 
-
-@dialogue .handle()
-async def dialogue_hander(bot: Bot, event: Event):
+@personal_info.handle()
+async def personal_info_handler(bot: Bot, event: Event):
     if not config.while_season_end:
-        if str(event.get_message()) == "珂学":
-            msg = await get_dialogue()
-            await dialogue.finish(msg)
+        if str(event.get_message()) == "个人信息":
+            score_handle = GlobalHandle(event.group_id, event.user_id)
+            score = score_handle.get_score()
+            grade,EXP,coin = score["grade"],score["EXP"],score["coin"]
+            if grade == 1:
+                grade = config.one_grade
+            elif grade == 2:
+                grade = config.two_grade
+            elif grade == 3:
+                grade = config.three_grade
+            elif grade == 4:
+                grade = config.four_grade
+            else:
+                grade = config.five_grade
+            image = MessageSegment.image(
+                file="https://q1.qlogo.cn/g?b=qq&nk={}&s=640".format(event.user_id))
+            msg = MessageSegment.at(event.user_id) + "的个人信息" + "\n" + image + "\n" + \
+                MessageSegment.face(random.choice([21, 24, 172, 175, 179, 183, 187, 202, 203, 212])) + "等级：{}".format(grade) + "\n" + \
+                MessageSegment.face(190) + "经验值：{}".format(str(EXP)) + "\n" + \
+                MessageSegment.face(158) + "墨鱼币：{}".format(str(coin))
+            await personal_info.finish(msg)
+
+
 
 oneword = on_startswith("一言", permission=GROUP, priority=2, block=True)
 
@@ -462,7 +486,7 @@ async def sign_in_handler(bot: Bot, event: Event):
 scheduler = require("nonebot_plugin_apscheduler").scheduler
 
 
-@scheduler.scheduled_job("date", run_date="2021-5-31 23:59:50", id="upgrade")
+@scheduler.scheduled_job("date", run_date="2021-8-13 23:59:59", id="upgrade")
 async def upgrade():
     config.while_season_end = True
     bot = list(get_bots().values())[0]
@@ -590,22 +614,10 @@ async def upgrade():
     await asyncio.sleep(2)
     for i in group_list:
         try:
-            await bot.call_api("send_group_msg", group_id=i, message="新赛季已开始，尽情享受吧！")
+            await bot.call_api("send_group_msg", group_id=i, message="开始更新...")
         except:
             pass
 
-
-check_coin = on_startswith("查墨鱼币", permission=GROUP, priority=2, block=True)
-
-
-@check_coin.handle()
-async def check_coin_handle(bot: Bot, event: Event):
-    if not config.while_season_end:
-        score_handle = GlobalHandle(event.group_id, event.user_id)
-
-        coin = score_handle.get_score()["coin"]
-        msg = MessageSegment.at(event.user_id) + f'您的墨鱼币为{coin}'
-        await check_coin.finish(msg)
 
 
 exchange = on_startswith("兑换", permission=GROUP, priority=2, block=True)

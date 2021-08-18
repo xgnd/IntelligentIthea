@@ -10,12 +10,12 @@ class BotConfig(BaseConfig):
     class Config:
         extra = Extra.allow
 
-    baidu_api_key: str = "Here is nothing."  # API Key
-    baidu_secret_key: str = "What are you looking?"  # Secret Key
-    baidu_bot_id: str = "ithea"  # 你闲聊机器人的 id 技能唯一标识，在『我的技能』的技能列表中的技能ID，详情见【请求参数详细说明】
+    baidu_api_key: str = "your api key"  # API Key
+    baidu_secret_key: str = "your secret Key"  # Secret Key
+    baidu_bot_id: str = ""  # 你闲聊机器人的 id 技能唯一标识，在『我的技能』的技能列表中的技能ID，详情见【请求参数详细说明】
     # 腾讯
     tx_app_id: int = 666666666  # 应用标识（AppId） int
-    tx_appkey: str = "你还瞅！"  # appkey
+    tx_appkey: str = "your app key"  # appkey
 
     opendrandom: bool = False  # 随机回复开关
     randomprobability: int = 1  # 随机回复概率，千分之 1

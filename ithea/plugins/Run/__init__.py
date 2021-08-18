@@ -1,16 +1,15 @@
-from nonebot.typing import T_State
-from nonebot.rule import to_me
-from nonebot.adapters import Bot, Event, Message
-from nonebot import get_driver, on_command, on_startswith, on_regex
-from nonebot.adapters.cqhttp import MessageSegment, GroupRequestEvent,GroupMessageEvent
-from nonebot.adapters.cqhttp.permission import GROUP
-
-
 import asyncio
-from PIL import Image, ImageFont, ImageDraw
-from io import BytesIO
 import base64
+from io import BytesIO
 
+from nonebot import get_driver, on_command, on_regex, on_startswith
+from nonebot.adapters import Bot, Event, Message
+from nonebot.adapters.cqhttp import (GroupMessageEvent, GroupRequestEvent,
+                                     MessageSegment)
+from nonebot.adapters.cqhttp.permission import GROUP
+from nonebot.rule import to_me
+from nonebot.typing import T_State
+from PIL import Image, ImageDraw, ImageFont
 
 from .config import Config
 from .data_source import *

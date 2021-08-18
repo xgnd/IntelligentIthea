@@ -78,7 +78,7 @@ class TXBot:
 
 async def test():
     # 换成你的
-    app_id = 111
+    app_id = 6666666
     appkey = ''
     session = '404'
     bot = TXBot(app_id=app_id, appkey=appkey, session=session)

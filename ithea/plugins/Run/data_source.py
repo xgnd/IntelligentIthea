@@ -1,11 +1,12 @@
-import sqlite3
-import os
-import random
 import copy
 import heapq
-import re
 import json
-from datetime import datetime, date
+import os
+import random
+import re
+import sqlite3
+from datetime import date, datetime
+
 from nonebot import get_driver
 
 from .config import Config
@@ -15,7 +16,7 @@ config = Config(**global_config.dict())
 
 def check_record(group):
     group = str(group)
-    project_path = os.path.dirname(os.path.abspath(__file__))
+    project_path = config.data_path
     file_path = os.path.join(project_path,'record.json')
 
     with open(file_path,"r", encoding='UTF-8') as f:
@@ -47,7 +48,7 @@ def check_record(group):
 class Run_chara:
     # 通过传入文件名 读入对应的角色Json文档进行初始化
     def __init__(self, id:str):
-        project_path = os.path.dirname(os.path.abspath(__file__))
+        project_path = config.data_path
         file_path = os.path.join(project_path,'config.json')
         
         # 读文件
@@ -135,34 +136,10 @@ class RunningJudger:
 
 class ScoreCounter:
     def __init__(self):
-        # os.makedirs(os.path.dirname(config.RUN_DB_PATH), exist_ok=True)
-        # self._create_table()
         with open(config.RUN_DB_PATH,"r",encoding="utf-8-sig") as f:
             self.data = json.load(f)
 
-    # def _connect(self):
-    #     return sqlite3.connect(config.RUN_DB_PATH)
-
-    # def _create_table(self):
-    #     try:
-    #         self._connect().execute('''CREATE TABLE IF NOT EXISTS SCORECOUNTER
-    #                       (GID             INT    NOT NULL,
-    #                        UID             INT    NOT NULL,
-    #                        SCORE           INT    NOT NULL,
-    #                        PRIMARY KEY(GID, UID));''')
-    #     except:
-    #         raise Exception('创建表发生错误')
-
     def _add_score(self, gid, uid, score):
-        # try:
-            # current_score = self._get_score(gid, uid)
-            # conn = self._connect()
-            # conn.execute("INSERT OR REPLACE INTO SCORECOUNTER (GID,UID,SCORE) \
-            #                     VALUES (?,?,?)", (gid, uid, current_score+score))
-            # print(current_score,score,current_score+score)
-            # conn.commit()
-        # except:
-            # raise Exception('更新表发生错误')
         group = str(gid)
         qq = str(uid)
         current_score = self._get_score(gid, uid)
@@ -172,22 +149,6 @@ class ScoreCounter:
             f.close()
 
     def _reduce_score(self, gid, uid, score):
-        # try:
-            # current_score = self._get_score(gid, uid)
-            # if current_score >= score:
-                
-                # conn = self._connect()
-                # conn.execute("INSERT OR REPLACE INTO SCORECOUNTER (GID,UID,SCORE) \
-                #                 VALUES (?,?,?)", (gid, uid, current_score-score))
-                # print(current_score,score,current_score-score)
-                # conn.commit()
-            # else:
-                # conn = self._connect()
-                # conn.execute("INSERT OR REPLACE INTO SCORECOUNTER (GID,UID,SCORE) \
-                #                 VALUES (?,?,?)", (gid, uid, 0))
-                # conn.commit()
-        # except:
-            # raise Exception('更新表发生错误')
         group = str(gid)
         qq = str(uid)
         current_score = self._get_score(gid, uid)
@@ -200,13 +161,6 @@ class ScoreCounter:
             f.close()
 
     def _get_score(self, gid, uid):
-        # try:
-            # r = self._connect().execute(
-            #     "SELECT SCORE FROM SCORECOUNTER WHERE GID=? AND UID=?", (gid, uid)).fetchone()
-            # print(r)
-            # return 0 if r is None else r[0]
-        # except:
-            # raise Exception('查找表发生错误')
         group = str(gid)
         qq = str(uid)
         if group in self.data.keys():

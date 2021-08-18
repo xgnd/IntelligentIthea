@@ -1,6 +1,6 @@
 import random
 
-from nonebot import on_command, on_message, on_regex, export,on_startswith
+from nonebot import on_command, on_message, on_regex, on_startswith, export
 from nonebot.permission import SUPERUSER
 from nonebot.typing import T_State
 from nonebot.adapters.cqhttp.bot import Bot
@@ -9,14 +9,14 @@ from nonebot.adapters.cqhttp.event import MessageEvent, GroupMessageEvent
 from nonebot.adapters.cqhttp.utils import unescape
 from nonebot.adapters.cqhttp.permission import GROUP_OWNER, GROUP_ADMIN, PRIVATE_FRIEND
 
-from .data_source import OPTIONS, word_bank as wb
-from .util import parse, parse_cmd
+from .data_source import word_bank as wb
+from .util import parse, parse_cmd, parse_ban
 
 reply_type = "random"
 
 export().word_bank = wb
 
-wb_matcher = on_message(priority=99)
+wb_matcher = on_message(priority=5)
 
 
 @wb_matcher.handle()
@@ -26,16 +26,31 @@ async def _(bot: Bot, event: MessageEvent):
     else:
         index = event.user_id
 
-    msgs = wb.match(index, event.raw_message)
+    msgs = wb.match(index, unescape(event.raw_message))
     if msgs:
         if reply_type == 'random':
-            msg = Message(unescape(parse(msg=random.choice(msgs),
+            msg = random.choice(msgs)
+
+            duration = parse_ban(msg)
+            if duration and isinstance(event, GroupMessageEvent):
+                await bot.set_group_ban(group_id=event.group_id, user_id=event.user_id, duration=duration)
+
+            await bot.send(event,
+                           message=Message(
+                               unescape(
+                                   parse(msg=msg,
                                          nickname=event.sender.card or event.sender.nickname,
-                                         sender_id=event.sender.user_id)))
-            await bot.send(event, message=msg)
+                                         sender_id=event.sender.user_id)
+                               )
+                           )
+                           )
 
         else:
             for msg in msgs:
+                duration = parse_ban(msg)
+                if duration and isinstance(event, GroupMessageEvent):
+                    await bot.set_group_ban(group_id=event.group_id, user_id=event.user_id, duration=duration)
+
                 await bot.send(event,
                                message=Message(
                                    unescape(
@@ -65,7 +80,7 @@ async def wb_set(bot: Bot, event: MessageEvent):
         type_ = 3 if '正则' in flag else 2 if '模糊' in flag else 1
 
         res = wb.set(0 if '全局' in flag else index,
-                     key,
+                     unescape(key),
                      value,
                      type_)
         if res:
@@ -82,12 +97,11 @@ async def wb_del_(bot: Bot, event: MessageEvent):
     else:
         index = event.user_id
 
-    msg = str(event.message)[4:].strip()
-    res = wb.delete(index, msg)
+    msg = str(event.message)
+    msg = msg[4:]
+    res = wb.delete(index, unescape(msg))
     if res:
         await bot.send(event, message='删除成功~')
-    else:
-        await bot.send(event, message='该词条不存在哟')
 
 
 wb_del_admin = on_startswith('删除全局词条', permission=SUPERUSER, )
@@ -95,13 +109,12 @@ wb_del_admin = on_startswith('删除全局词条', permission=SUPERUSER, )
 
 @wb_del_admin.handle()
 async def wb_del_admin_(bot: Bot, event: MessageEvent):
-    msg = str(event.message)[6:].strip()
+    msg = str(event.message).strip()
+    msg = msg[6:]
     if msg:
-        res = wb.delete(0, msg)
+        res = wb.delete(0, unescape(msg))
         if res:
             await bot.send(event, message='删除成功~')
-        else:
-            await bot.send(event, message='该词条不存在哟')
 
 
 async def wb_del_all_a(bot: Bot, event: MessageEvent, state: T_State):
@@ -121,7 +134,8 @@ wb_del_all_bank = on_startswith('删除全部词库', permission=SUPERUSER, hand
 
 @wb_del_all_cmd.got('is_sure', prompt='此命令将会清空您的群聊/私人词库，确定请发送 yes')
 async def wb_del_all_(bot: Bot, event: MessageEvent, state: T_State):
-    if state['is_sure'] == 'yes':
+    print(state['is_sure'])
+    if str(state['is_sure']) == 'yes':
 
         if isinstance(event, GroupMessageEvent):
             res = wb.clean(event.group_id)
@@ -150,7 +164,7 @@ async def wb_del_all_admin_(bot: Bot, event: MessageEvent, state: T_State):
 
 
 @wb_del_all_bank.got('is_sure', prompt='此命令将会清空您的全部词库，确定请发送 yes')
-async def wb_del_all_admin_(bot: Bot, event: MessageEvent, state: T_State):
+async def wb_del_all_bank_(bot: Bot, event: MessageEvent, state: T_State):
     if state['is_sure'] == 'yes':
         res = wb._clean_all()
 

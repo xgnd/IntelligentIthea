@@ -49,7 +49,6 @@ def chat_me() -> Rule:
     return Rule(_chat_me)
 
 
-# nonebot.load_builtin_plugins('single_session') # 有bug
 ELF_bot = on_startswith('', rule=chat_me(), priority=1)
 
 

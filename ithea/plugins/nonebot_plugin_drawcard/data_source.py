@@ -1,27 +1,54 @@
 import asyncio
+import aiohttp
 import json
 import os
 import random
 import shutil
 from collections import OrderedDict
 from datetime import date, datetime
+from PIL import Image, ImageDraw, ImageFont
 
-import aiohttp
 from nonebot import get_driver
 from nonebot.adapters import Bot
 from nonebot.adapters.cqhttp import MessageSegment
-from PIL import Image, ImageDraw, ImageFont
 
 from .config import Config
 
 global_config = get_driver().config
 config = Config(**global_config.dict())
 
-
 data_route = config.data_route
 image_route = config.image_route
 
 role_data = config.data
+warehouse_data = config.warehouse_data
+
+# 加载图片
+background_small = Image.open(os.path.join(
+    image_route, "background_small.png"))
+background_middle = Image.open(os.path.join(
+    image_route, "background_middle.png"))
+background_big = Image.open(os.path.join(image_route, "background_big.png"))
+
+all_role_data = role_data["role"]["role_data"]
+all_card_dict = {}
+all_avatar_dict = {}
+all_grey_avatar_dict = {}
+for i in all_role_data.keys():
+    role_image_url = all_role_data[i]["url"].replace("file:///", "")
+    new_img = Image.open(role_image_url)
+    all_card_dict[i] = new_img
+    role_image_url = all_role_data[i]["url"].replace(
+        "file:///", "").replace("image", "image/头像")
+    new_img = Image.open(role_image_url)
+    all_avatar_dict[i] = new_img
+    role_image_url = all_role_data[i]["url"].replace(
+        "file:///", "").replace("image", "image/灰头像")
+    new_img = Image.open(role_image_url)
+    all_grey_avatar_dict[i] = new_img
+
+
+ttf = ImageFont.truetype("C:/windows/fonts/arial.ttf", 15)
 
 
 class DrawCardRule():
@@ -227,7 +254,7 @@ class DrawCardRule():
             grade = random.choices([1, 2], [0.2, 0.8])[0]
         elif grade == 1:
             pass   # 当等级为超稀有时，合成只会出超稀有，合成等级不变
-        
+
         compose_weights = dict_shuffle(
             role_data["rules"]["weights"]["compose"]["grade_"+str(grade)])   # 对该等级的卡牌顺序进行打乱
 
@@ -267,12 +294,9 @@ class DrawCardRule():
     def pic_composition(self, card_list):
         """ 抽卡和合成图片合成 """
         # 加载底图
-        all_role_data = role_data["role"]["role_data"]
         new_img_list = []
         for i in card_list:
-            role_image_url = all_role_data[i]["url"].replace(
-                "file:///", "")
-            new_img = Image.open(role_image_url)
+            new_img = all_card_dict[i]
             new_img_list.append(new_img)
 
         # 底图上需要P掉的区域
@@ -280,12 +304,10 @@ class DrawCardRule():
         box = []
         card_list_len = len(card_list)
         if card_list_len == 1:
-            base_img = Image.open(os.path.join(
-                image_route, "background_small.png"))
+            base_img = background_small
             box.append((150, 70, 546, 626))
         elif card_list_len == 2:
-            base_img = Image.open(os.path.join(
-                image_route, "background_middle.png"))
+            base_img = background_middle
             box.append((70, 223, 466, 779))
             box.append((536, 223, 932, 779))
         elif card_list_len == 3:
@@ -307,6 +329,7 @@ class DrawCardRule():
 
         base_img = base_img.resize((500, 500))
         # 可以设置保存路径
+
         save_route = image_route + \
             '/cache/{filename}.png'.format(
                 filename=str(int(datetime.now().timestamp())))
@@ -441,35 +464,29 @@ class DrawCardRule():
         new_img_list = []
         for i in role_list_keys:
             if role_list[i] != 404:
-                pic_route = all_role_list[i]["url"].replace(
-                    "file:///", "").replace("image", "image/头像")
-                new_img = Image.open(pic_route)
+                new_img = all_avatar_dict[i]
                 new_img_list.append(new_img)
             else:
-                pic_route = all_role_list[i]["url"].replace(
-                    "file:///", "").replace("image", "image/灰头像")
-                new_img = Image.open(pic_route)
+                new_img = all_grey_avatar_dict[i]
                 new_img_list.append(new_img)
 
         box = []
-        with open(image_route + "/warehouse.json", 'r', encoding='utf-8-sig') as f:
-            warehouse_ini = json.load(f)
-            for i in role_list_keys:
-                box.append(tuple(warehouse_ini[i]))
-            f.close()
 
-        ttf = ImageFont.truetype("C:/windows/fonts/arial.ttf", 15)
+        for i in role_list_keys:
+            box.append(tuple(warehouse_data[i]))
+
         n = 0
         for i in role_list_keys:
-            for j in box:
-                if role_list[i] != 404:
-                    draw = ImageDraw.Draw(new_img_list[n])
-                    draw.text((61, 61), '×' +
-                              str(role_list[i]), font=ttf, fill=(0, 0, 0))
-
-                    base_img.paste(new_img_list[n], box[n])
-                else:
-                    base_img.paste(new_img_list[n], box[n])
+            # for j in box:
+            if role_list[i] != 404:
+                draw = ImageDraw.Draw(new_img_list[n])
+                draw.text((61, 61), '×' +
+                          str(role_list[i]), font=ttf, fill=(0, 0, 0))
+                base_img.paste(
+                    new_img_list[n], box[n])
+            else:
+                base_img.paste(
+                    new_img_list[n], box[n])
             n += 1
 
         base_img.resize((500, 500))
@@ -587,6 +604,12 @@ def get_grade(number) -> int:
     """ 取角色等级，返回一个整数 """
     role_grade = role_data["role"]["role_data"][number]["grade"]
     return role_grade
+
+
+def get_introduction(number) -> int:
+    """ 取角色等级，返回一个整数 """
+    role_introduction = role_data["role"]["role_data"][number]["introduction"]
+    return role_introduction
 
 
 async def get_sticker(number) -> MessageSegment:
@@ -766,13 +789,6 @@ async def upgrade_check(qq_group, qq):
         return 0, 0, 0, 0
 
 
-async def get_dialogue():
-    with open(data_route + "/终末台词.json", 'r', encoding='utf-8-sig') as f:
-        dialogue_list = json.load(f)["word"]
-        dialogue = random.choice(dialogue_list)
-        return dialogue
-
-
 async def download_user_pic(qq) -> str:
     """ 下载用户头像 """
     url = "https://q1.qlogo.cn/g?b=qq&nk={}&s=640".format(qq)
@@ -816,18 +832,14 @@ def dict_reduce(dict_1, dict_2) -> dict:
     list_2_keys = list(dict_2.keys())
     for i in list_1_keys:
         if i in list_2_keys:
-            if dict_1[i] == dict_2[i]:
-                re_dict[i] = 0
+            if dict_1[i] != dict_2[i]:
+                re_dict[i] = dict_1[i]
                 continue
-            re_dict[i] = dict_1[i]
         else:
             re_dict[i] = dict_1[i]
 
     for i in list_2_keys:
-        if i not in list(re_dict.keys()):
+        if i not in list(dict_1.keys()):
             re_dict[i] = 404
 
-    for i in list(re_dict.keys()):
-        if re_dict[i] == 0:
-            re_dict.pop(i)
     return re_dict

@@ -11,7 +11,7 @@ global_config = get_driver().config
 config = Config(**global_config.dict())
 
 
-game = on_message(permission=GROUP, priority=10)
+game = on_message(permission=GROUP, priority=2)
 
 
 @game.handle()
@@ -41,6 +41,10 @@ async def handle_first_receive(bot: Bot, event: Event, state: dict):
             else:
                 await game.finish(MessageSegment.at(uid)+"当前并没有正在进行的游戏")
         if message.isdigit() and len(message) == 4:
+            for i in message:
+                a = message.count(i, 0, len(message))
+                if a>1:
+                    await game.finish("答案不得出现重复的数字哟~")
             result,round_times = guess(gid, uid, message)
             if result != 0:
                 await game.send(MessageSegment.at(uid)+f"第{round_times}轮猜测结果：" + result)

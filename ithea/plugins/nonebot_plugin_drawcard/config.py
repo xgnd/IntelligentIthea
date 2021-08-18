@@ -7,6 +7,9 @@ i_route = os.path.join(os.getcwd(), "data", "image")   # 取图片路径
 with open(os.path.join(d_route, "config.json"), 'r', encoding='utf-8-sig') as f:   # 读入角色数据
     d = json.load(f)
     f.close()
+with open(i_route + "/warehouse.json", 'r', encoding='utf-8-sig') as f:
+    wd = json.load(f)
+    f.close()
 
 class Config(BaseSettings):
     while_season_end = False
@@ -14,6 +17,7 @@ class Config(BaseSettings):
     data_route = d_route
     image_route = i_route
     data = d
+    warehouse_data = wd
 
     season = data["rules"]["settings"]["season"]
 

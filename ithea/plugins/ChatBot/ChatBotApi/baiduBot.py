@@ -14,7 +14,7 @@ class BaiduBot:
     _token_url = 'https://aip.baidubce.com/oauth/2.0/token?grant_type=client_credentials&client_id={}&client_secret={}'
     _API_Key = ''  # API Key
     _Secret_Key = ''  # Secret Key
-    _bot_id = 'S666666666'  # 机器人 ID（S开头）
+    _bot_id = ''  # 机器人 ID（S开头）
     _session = '10000'  # 会话标识（应用内唯一）
     _Proxy = None
     _client = None
@@ -40,7 +40,7 @@ class BaiduBot:
             "version": "2.0",
             "service_id": self._bot_id,
             "session_id": self._session_id,
-            "skill_ids":["1080020"],
+            "skill_ids":[],
             "request": {
                 "query": question,
                 "user_id": self._session
@@ -72,9 +72,11 @@ class BaiduBot:
         # }
         async with self._client as client:
             headers = {'content-type': 'application/json'}
+            print(self._api_url + '?access_token=' + self._token)
+            print(json.dumps(params, ensure_ascii=False))
             res = await client.post(self._api_url + '?access_token=' + self._token,data=json.dumps(params, ensure_ascii=False),headers=headers)
             data = res.json()
-            # print(data)
+            print(data)
             self._session_id = data['result']['session_id']
             try:
                 # 返回的有多个回答 ，但暂时默认只返回第一个，如果想返回其他的，再下次发送时需把选择的回答放入 bot_session 对话信息发送过去
@@ -113,6 +115,7 @@ class BaiduBot:
         else:
             self._client = httpx.AsyncClient(proxies={})
         self._token = requests.post(self._token_url.format(self._API_Key, self._Secret_Key)).json()['access_token']
+        # print(requests.post(self._token_url.format(self._API_Key, self._Secret_Key)).json()['access_token'])
         pass
 
 
