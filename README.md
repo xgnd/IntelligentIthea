@@ -69,7 +69,7 @@
 ### 5、点歌 [歌曲名]
 此为原插件[songpicker2](https://github.com/maxesisn/nonebot_plugin_songpicker2)稍加改动而成。玩家可以通过输入“点歌”+空格+歌曲名完成点歌。仅支持网易云音乐的点歌（因为实在找不到其他音乐平台的接口或接口经常失灵）
 ### 6、赛跑
-此为原插件[Pcr_Run](https://github.com/Rs794613/PcrRun)稍加改动而成。一个赛跑下注的小游戏，玩家可以发起赛跑并进行墨鱼币下注。注：nonebot2更新后的新特性，导致赛跑的发起人无法参与下注
+此为原插件[Pcr_Run](https://github.com/Rs794613/PcrRun)稍加改动而成。一个赛跑下注的小游戏，玩家可以发起赛跑并进行墨鱼币下注
 ### 7、闲聊
 此为原插件[ELFChatBot](https://github.com/Quan666/ELFChatBot)稍加改动而成。玩家可在群里@机器人发起会话，发送“再见”结束会话或通过私聊直接进行闲聊
 ### 8、五子棋
