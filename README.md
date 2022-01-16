@@ -1,9 +1,21 @@
 # 智能型艾瑟雅（IntelligentIthea）
 <div align=center><img src="https://app.xgnd.net/4_G7WH4NB3WX_8J_HQ4R9_J.png" width="20%"/>
 
-**智能型艾瑟雅（IntelligentIthea）：一个终末三问（末日时在做什么？有没有空？可以来拯救吗？）抽卡游戏qq机器人**
-<p align=center><a href="https://qm.qq.com/cgi-bin/qm/qr?k=45tg4hcuhjbxHT8u9QIDhVV_Ne6zTzJr&jump_from=webapi"><img src="https://img.shields.io/badge/qq%E7%BE%A4-768887710-orange?style=flat-square" alt="QQ Chat"></a></p>
-</div>
+**智能型艾瑟雅（IntelligentIthea）：一个终末三问（末日时在做什么？有没有空？可以来拯救吗？）抽卡游戏qq机器人**</div>
+<p align=center>
+<a href="https://qm.qq.com/cgi-bin/qm/qr?k=45tg4hcuhjbxHT8u9QIDhVV_Ne6zTzJr&jump_from=webapi">
+<img src="https://img.shields.io/badge/qq%E7%BE%A4-768887710-orange?style=flat-square">
+</a>
+<a href="https://img.shields.io/badge/python-3.8.5+-blue">
+<img src="https://img.shields.io/badge/python-3.8.5+-blue"/>
+</a>
+<a href="https://img.shields.io/badge/nonebot-2.0.0a16-mint">
+<img src="https://img.shields.io/badge/nonebot-2.0.0a16-mint"/>
+</a>
+<a href="https://img.shields.io/badge/go--cqhttp-1.0.0--beta8-lime">
+<img src="https://img.shields.io/badge/go--cqhttp-1.0.0--beta8-lime"/>
+</a>
+</p>
 
 >**本机器人基于[NoneBot2](https://github.com/nonebot/nonebot2)制作，衷心服务于每一位热爱珂学的珂学家！**  
 >**十分感谢各位开发组的小伙伴：青风光翼（285984384）、西瓜nd（2741584344）、回响（2769640073）**  
