@@ -741,7 +741,7 @@
         "settings": {
             "length": 90,
             "season": 6,
-            "drawcard_times": 3,
+            "drawcard_times": 1,
             "drawcard_cd": 10,
             "sign_in_EXP": 10,
             "sign_in_coin": 5,
@@ -760,7 +760,9 @@
                 "s2": "天上之森",
                 "s3": "碧空莉影",
                 "s4": "终末回声",
-                "s5": "浮光掠影"
+                "s5": "浮光掠影",
+                "s6": "彼界微光",
+                "s7": "预兆之梦"
             }
         }
     }

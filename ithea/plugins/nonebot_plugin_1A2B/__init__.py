@@ -11,7 +11,7 @@ global_config = get_driver().config
 config = Config(**global_config.dict())
 
 
-game = on_message(permission=GROUP, priority=2)
+game = on_message(permission=GROUP, priority=3)
 
 
 @game.handle()

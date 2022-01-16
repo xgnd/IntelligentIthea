@@ -1,15 +1,16 @@
-import asyncio
-import base64
-from io import BytesIO
-
-from nonebot import get_driver, on_command, on_regex, on_startswith
-from nonebot.adapters import Bot, Event, Message
-from nonebot.adapters.cqhttp import (GroupMessageEvent, GroupRequestEvent,
-                                     MessageSegment)
-from nonebot.adapters.cqhttp.permission import GROUP
-from nonebot.rule import to_me
 from nonebot.typing import T_State
-from PIL import Image, ImageDraw, ImageFont
+from nonebot.rule import to_me
+from nonebot.adapters import Bot, Event, Message
+from nonebot import get_driver, on_command, on_startswith, on_regex
+from nonebot.adapters.cqhttp import MessageSegment, GroupRequestEvent,GroupMessageEvent
+from nonebot.adapters.cqhttp.permission import GROUP
+
+
+import asyncio
+from PIL import Image, ImageFont, ImageDraw
+from io import BytesIO
+import base64
+
 
 from .config import Config
 from .data_source import *
@@ -88,7 +89,7 @@ start = on_startswith("赛跑开始",permission=GROUP,priority=2, block=True)
 
 @start.handle()
 async def Racetest(bot: Bot, event: Event):
-    if event.group_id != 764533822 and event.sender.role != "admin" and event.sender.role != "owner":
+    if event.sender.role != "admin" and event.sender.role != "owner":
         await start.finish('只有群管理才能开启赛跑')
     if running_judger.get_on_off_status(event.group_id):
         await start.finish("此轮赛跑还没结束，请勿重复使用指令。")
@@ -253,7 +254,7 @@ reset = on_startswith("重置赛跑", permission=GROUP, priority=2, block=True)
 async def init_runstatus(bot: Bot, event: Event):
     print(event.group_id,type(event.group_id))
     print(event.sender.role)
-    if event.group_id != 764533822 and event.sender.role != "admin" and event.sender.role != "owner":
+    if event.sender.role != "admin" and event.sender.role != "owner":
         await reset.finish('只有群管理才能使用重置赛跑哦')
     running_judger.turn_off(event.group_id)
     running_judger.set_support(event.group_id)

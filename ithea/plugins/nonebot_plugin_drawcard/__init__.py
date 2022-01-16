@@ -26,7 +26,7 @@ async def menu_handler(bot: Bot, event: Event):
         if str(event.get_message()) == "菜单":
             msg = MessageSegment.face(144) + "◇━━菜单━━◇" + MessageSegment.face(144) + "\n" + MessageSegment.face(54) + "抽卡（或戳一戳）" + "\n" + \
                 MessageSegment.face(54) + "排行榜" + "\n" + MessageSegment.face(54) + "合成 [角色] [角色]" + "\n" + MessageSegment.face(54) + "一键合成 [等级]" + "\n" + MessageSegment.face(
-                    54) + "查看 [角色]" + "\n" + MessageSegment.face(54) + "查看仓库" + "\n" + MessageSegment.face(54) + "卡牌列表" + "\n" + MessageSegment.face(54) + "编号图" + "\n" + MessageSegment.face(54) + "兑换 [商品]" + "\n" + MessageSegment.face(54) + "1A2B" + "\n" + MessageSegment.face(54) + "珂学" + "\n" + MessageSegment.face(54) + "一言" + "\n" + MessageSegment.face(54) + "点歌 [歌曲名]"
+                    54) + "查看 [角色]" + "\n" + MessageSegment.face(54) + "查看仓库" + "\n" + MessageSegment.face(54) + "卡牌列表" + "\n" + MessageSegment.face(54) + "编号图" + "\n" + MessageSegment.face(54) + "兑换 [商品]" + "\n" + MessageSegment.face(54) + "1A2B" + "\n" +MessageSegment.face(54) + "五子棋" + "\n" + MessageSegment.face(54) + "一言" + "\n" + MessageSegment.face(54) + "点歌 [歌曲名]"+"\n" + MessageSegment.face(54) + "走进珂学"
             await menu.finish(msg)
 
 
@@ -118,7 +118,7 @@ async def ranking_handler(bot: Bot, event: Event):
                     "图鉴完成度：" + str(score[i])
                 if n == 10:
                     break
-            msg = MessageSegment.face(99) + "◇━━终末回声排行榜━━◇" + \
+            msg = MessageSegment.face(99) + "◇━━彼界微光排行榜━━◇" + \
                 MessageSegment.face(99) + msg_1
             await ranking.finish(msg)
 
@@ -462,26 +462,6 @@ async def sign_in_handler(bot: Bot, event: Event):
                         msg = await get_sticker(4)
                         await sign_in.finish(msg)
 
-# 补加赛季结算
-# scheduler_replenish = require("nonebot_plugin_apscheduler").scheduler
-
-
-# @scheduler_replenish.scheduled_job("date", run_date="2021-4-3 00:25:00", id="replenish")
-# async def replenish():
-#     bot = list(get_bots().values())[0]
-#     _group_list = await bot.call_api("get_group_list")
-#     group_list = []
-#     for i in _group_list:
-#         group_list.append(i["group_id"])
-
-#     for i in group_list:
-#         await bot.call_api("send_group_msg", group_id=i, message="通知：非常抱歉，由于打开方式不对，导致赛季结算没能完成，现在将对各位上赛季的战绩进行结算")
-#     await asyncio.sleep(4)
-    
-#     await asyncio.sleep(4)
-#     for i in group_list:
-#         await bot.call_api("send_group_msg", group_id=i, message="第三赛季「碧空莉影」已开启，现在就尽情享受吧！")
-
 
 scheduler = require("nonebot_plugin_apscheduler").scheduler
 
@@ -497,7 +477,7 @@ async def upgrade():
     for i in _group_list:
         group_list.append(i["group_id"])
 
-    msg = ["嘿嘿，开始赛季结算了！（正在全群广播）","统计赛季数据ing..."]
+    msg = ["咳咳咳，时鸽两个月，又要开始愉快的开始赛季结算了！（正在全群广播）","听说这个赛季里出现了满卡的大佬，佩服佩服","另外通知一个好消息！","我的莲又要上线啦！","她将活跃在各个群里，多多支持啦~","好了，下面开始数据统计","统计赛季数据ing..."]
     for n in msg:
         for i in group_list:
             try:
@@ -619,7 +599,6 @@ async def upgrade():
             pass
 
 
-
 exchange = on_startswith("兑换", permission=GROUP, priority=2, block=True)
 
 
@@ -631,14 +610,14 @@ async def exchange_handle(bot: Bot, event: Event, state: T_State):
         state["commodity"] = commodity  # 如果用户发送了参数则直接赋值
 
 
-@exchange.got("commodity", prompt="◇━商品列表━◇\n" + "⭐️抽卡（30币）" + "\n" + "------------------------------" + "\n" + "请问要兑换什么呢~")
+@exchange.got("commodity", prompt="◇━商品列表━◇\n" + "⭐️抽卡（90币）" + "\n" + "------------------------------" + "\n" + "请问要兑换什么呢~")
 async def exchange_got(bot: Bot, event: Event, state: T_State):
     commodity = state["commodity"]
     if commodity == "抽卡":
         score_handle = GlobalHandle(event.group_id, event.user_id)
         score = score_handle.get_score()
-        if score["coin"] >= 30:
-            score_handle.reduce_score(0, 0, 30)
+        if score["coin"] >= 90:
+            score_handle.reduce_score(0, 0, 90)
             await exchange.send("兑换成功！")
             draw_h = DrawCardRule(event.group_id, event.user_id)
             card, hint, image = await draw_h.drawcard(True)

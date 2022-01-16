@@ -113,32 +113,33 @@ class DrawCardRule():
             grade_2 = 0
             grade_3 = 0
 
-            draw_num = random.choices([2, 3, 4], [0.6, 0.4, 0.2])[
-                0]  # 一次抽卡获得卡片数
+            for i in range(3):
+                draw_num = random.choices([2, 3, 4], [0.6, 0.4, 0.2])[
+                    0]  # 一次抽卡获得卡片数
 
-            # 取抽卡概率
-            draw_weights = role_data["rules"]['weights']['draw']
+                # 取抽卡概率
+                draw_weights = role_data["rules"]['weights']['draw']
 
-            draw_weights = dict_shuffle(draw_weights)  # 打乱卡牌概率的字典
-            for i in range(draw_num):
-                draw_card = random.choices(
-                    list(draw_weights.keys()), list(draw_weights.values()))[0]  # 抽卡
-                grade = get_grade(draw_card)
-                if draw_card in draw_role_card:
-                    n = draw_role_card.index(draw_card)
-                    draw_role_length[n] += 1
-                    continue
-                if grade == 1:
-                    n = grade_1
-                    grade_1 += 1
-                if grade == 2:
-                    n = grade_1 + grade_2
-                    grade_2 += 1
-                if grade == 3:
-                    n = grade_1 + grade_2 + grade_3
-                    grade_3 += 1
-                draw_role_card.insert(n, draw_card)
-                draw_role_length.insert(n, 1)
+                draw_weights = dict_shuffle(draw_weights)  # 打乱卡牌概率的字典
+                for i in range(draw_num):
+                    draw_card = random.choices(
+                        list(draw_weights.keys()), list(draw_weights.values()))[0]  # 抽卡
+                    grade = get_grade(draw_card)
+                    if draw_card in draw_role_card:
+                        n = draw_role_card.index(draw_card)
+                        draw_role_length[n] += 1
+                        continue
+                    if grade == 1:
+                        n = grade_1
+                        grade_1 += 1
+                    if grade == 2:
+                        n = grade_1 + grade_2
+                        grade_2 += 1
+                    if grade == 3:
+                        n = grade_1 + grade_2 + grade_3
+                        grade_3 += 1
+                    draw_role_card.insert(n, draw_card)
+                    draw_role_length.insert(n, 1)
             self.draw_card_dict = dict(zip(draw_role_card, draw_role_length))
             await DrawCardRule.savedata(self, self.draw_card_dict)  # 保存数据
             image = DrawCardRule.pic_composition(
@@ -295,14 +296,18 @@ class DrawCardRule():
         """ 抽卡和合成图片合成 """
         # 加载底图
         new_img_list = []
+        j=0
         for i in card_list:
             new_img = all_card_dict[i]
             new_img_list.append(new_img)
-
+            j+=1
+            if j==4:
+                break
+        print(new_img_list)
         # 底图上需要P掉的区域
         # 以左边界为准（left, upper, right, lower）
         box = []
-        card_list_len = len(card_list)
+        card_list_len = len(new_img_list)
         if card_list_len == 1:
             base_img = background_small
             box.append((150, 70, 546, 626))
@@ -311,14 +316,12 @@ class DrawCardRule():
             box.append((70, 223, 466, 779))
             box.append((536, 223, 932, 779))
         elif card_list_len == 3:
-            base_img = Image.open(os.path.join(
-                image_route, "background_big.png"))
+            base_img = Image.open(os.path.join(image_route, "background_big.png"))
             box.append((177, 70, 573, 626))
             box.append((750, 70, 1146, 626))
             box.append((463, 696, 859, 1252))
         elif card_list_len == 4:
-            base_img = Image.open(os.path.join(
-                image_route, "background_big.png"))
+            base_img = Image.open(os.path.join(image_route, "background_big.png"))
             box.append((177, 70, 573, 626))
             box.append((750, 70, 1146, 626))
             box.append((177, 696, 573, 1252))
@@ -329,7 +332,7 @@ class DrawCardRule():
 
         base_img = base_img.resize((500, 500))
         # 可以设置保存路径
-
+        
         save_route = image_route + \
             '/cache/{filename}.png'.format(
                 filename=str(int(datetime.now().timestamp())))
@@ -436,6 +439,7 @@ class DrawCardRule():
                     data_route, self.group, self.qq+".png")
                 save_route = "file:///"+image
                 image = MessageSegment.image(file=save_route)
+
                 return image, role_length, all_role_length, card_lenth, role, grade, member_ranking
 
             image = DrawCardRule.warehouse_pic_composition(
@@ -444,7 +448,7 @@ class DrawCardRule():
             with open(self.user_data_url, 'w', encoding='utf-8') as f:
                 f.write(json.dumps(user_data, ensure_ascii=False))
                 f.close()
-
+            
             return image, role_length, all_role_length, card_lenth, role, grade, member_ranking
 
     def warehouse_pic_composition(self, role_list, if_warehouse=False):
@@ -460,7 +464,7 @@ class DrawCardRule():
         all_role_list = role_data["role"]["role_data"]
 
         role_list_keys = list(role_list.keys())
-
+        
         new_img_list = []
         for i in role_list_keys:
             if role_list[i] != 404:
@@ -471,30 +475,32 @@ class DrawCardRule():
                 new_img_list.append(new_img)
 
         box = []
-
+        
         for i in role_list_keys:
             box.append(tuple(warehouse_data[i]))
-
+        
         n = 0
         for i in role_list_keys:
             # for j in box:
             if role_list[i] != 404:
                 draw = ImageDraw.Draw(new_img_list[n])
                 draw.text((61, 61), '×' +
-                          str(role_list[i]), font=ttf, fill=(0, 0, 0))
+                            str(role_list[i]), font=ttf, fill=(0, 0, 0))
                 base_img.paste(
                     new_img_list[n], box[n])
             else:
                 base_img.paste(
                     new_img_list[n], box[n])
             n += 1
-
+        
         base_img.resize((500, 500))
 
         save_route = os.path.join(data_route, self.group, self.qq+".png")
         base_img.save(save_route)
         save_route = "file:///"+save_route
         image = MessageSegment.image(file=save_route)
+        
+
         return image
 
     def get_group_ranking(self) -> dict:
@@ -605,7 +611,6 @@ def get_grade(number) -> int:
     role_grade = role_data["role"]["role_data"][number]["grade"]
     return role_grade
 
-
 def get_introduction(number) -> int:
     """ 取角色等级，返回一个整数 """
     role_introduction = role_data["role"]["role_data"][number]["introduction"]
@@ -641,6 +646,7 @@ def numbername(number):
     except:
         return 0
 
+
 def namenumber(name):
     """ 名字转编号，传入一个代表名字的字符串或字符串列表 """
     role_data_number = role_data["number"]
@@ -659,7 +665,6 @@ def namenumber(name):
 def season_over():
     files = os.listdir(data_route)
     files.remove("history")
-    files.remove("终末台词.json")
     files.remove("config.json")
     files.remove("global_data.json")
     files.remove("global_record.json")
@@ -843,3 +848,4 @@ def dict_reduce(dict_1, dict_2) -> dict:
             re_dict[i] = 404
 
     return re_dict
+
