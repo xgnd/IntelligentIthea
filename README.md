@@ -9,13 +9,14 @@
 <a href="https://img.shields.io/badge/python-3.8.5+-blue">
 <img src="https://img.shields.io/badge/python-3.8.5+-blue"/>
 </a>
-<a href="https://img.shields.io/badge/nonebot-2.0.0a16-mint">
-<img src="https://img.shields.io/badge/nonebot-2.0.0a16-mint"/>
+<a href="https://img.shields.io/badge/nonebot-2.0.0--beta.4-mint">
+<img src="https://img.shields.io/badge/nonebot-2.0.0--beta.4-mint"/>
 </a>
-<a href="https://img.shields.io/badge/go--cqhttp-1.0.0--beta8-lime">
-<img src="https://img.shields.io/badge/go--cqhttp-1.0.0--beta8-lime"/>
+<a href="https://img.shields.io/badge/go--cqhttp-v1.0.0--rc3-lime">
+<img src="https://img.shields.io/badge/go--cqhttp-v1.0.0--rc3-lime"/>
 </a>
 </p>
+
 
 >**本机器人基于[NoneBot2](https://github.com/nonebot/nonebot2)制作，衷心服务于每一位热爱珂学的珂学家！**  
 >**十分感谢各位开发组的小伙伴：青风光翼（285984384）、西瓜nd（2741584344）、回响（2769640073）**  
@@ -72,21 +73,92 @@
 此为原插件[Pcr_Run](https://github.com/Rs794613/PcrRun)稍加改动而成。一个赛跑下注的小游戏，玩家可以发起赛跑并进行墨鱼币下注
 ### 7、闲聊
 此为原插件[ELFChatBot](https://github.com/Quan666/ELFChatBot)稍加改动而成。玩家可在群里@机器人发起会话，发送“再见”结束会话或通过私聊直接进行闲聊
-### 8、五子棋
-五子棋开始：创建一个棋局（持续60s），等待其他玩家加入
+### 8、棋类
 
-五子棋加入：加入一个等待阶段的棋局
+十分感谢[MeetWq](https://github.com/MeetWq)大佬制作的以下功能！
 
-认输：当玩家正在棋局中时，可用此命令结束棋局
+#### 五子棋
 
+五子棋对战： 开始一个对应的棋局，一个群组内同时只能有一个棋局
 
+查看棋盘：查看所处棋局的棋盘
+
+悔棋：可以进行悔棋
+
+停止下棋：结束棋局
+
+重载五子棋棋局：手动结束游戏或超时结束游戏时，可发送该命令继续下棋
+
+#### 围棋（禁全同，暂时不支持点目）
+
+围棋对战： 开始一个对应的棋局，一个群组内同时只能有一个棋局
+
+查看棋盘：查看所处棋局的棋盘
+
+悔棋：可以进行悔棋
+
+停止下棋：结束棋局
+
+重载围棋棋局：手动结束游戏或超时结束游戏时，可发送该命令继续下棋
+
+#### 黑白棋
+
+围棋对战： 开始一个对应的棋局，一个群组内同时只能有一个棋局
+
+查看棋盘：查看所处棋局的棋盘
+
+跳过回合：跳过当前回合（仅黑白棋支持）
+
+悔棋：可以进行悔棋
+
+停止下棋：结束棋局
+
+重载围棋棋局：手动结束游戏或超时结束游戏时，可发送该命令继续下棋
+
+#### 象棋
+
+象棋对战： 开始一个对应的棋局，一个群组内同时只能有一个棋局
+
+象棋人机：与机器人进行象棋对战，可使用“lv1~8”指定AI等级，如“象棋人机lv5”，默认为“lv4”
+
+查看棋盘：查看所处棋局的棋盘
+
+悔棋：可以进行悔棋
+
+停止下棋：结束棋局
+
+重载象棋棋局：手动结束游戏或超时结束游戏时，可发送该命令继续下棋
+
+#### 国际象棋
+
+国际象棋对战： 开始一个对应的棋局，一个群组内同时只能有一个棋局
+
+国际象棋人机：与机器人进行国际象棋对战，可使用“lv1~8”指定AI等级，如“国际象棋人机lv5”，默认为“lv4”
+
+查看棋盘：查看所处棋局的棋盘
+
+悔棋：可以进行悔棋
+
+停止下棋：结束棋局
+
+重载国际象棋棋局：手动结束游戏或超时结束游戏时，可发送该命令继续下棋
+
+### 9、扫雷
+
+十分感谢[MeetWq](https://github.com/MeetWq)大佬制作的此功能！
+
+扫雷开始/扫雷初级/扫雷中级/扫雷高级：开始一局扫雷，可设置不同难度
+
+查看游戏：查看所处游戏画面
+
+扫雷结束：结束正在进行的扫雷游戏
 
 ## 用法
 ### 官方机器人环境（仅供参考）：
 - 语言：python 3.8.5
-- 框架：[nonebot 2.0.0a16](https://github.com/nonebot/nonebot2)
-- 适配器：[nonebot-adapter-cqhttp 2.0.0a16](https://pypi.org/project/nonebot-adapter-cqhttp/2.0.0a16/)
-- QQ协议端：[go-cqhttp v1.0.0-beta8](https://github.com/Mrs4s/go-cqhttp)
+- 框架：[nonebot 2.0.0-beta.4](https://github.com/nonebot/nonebot)
+- 适配器：[nonebot-adapter-onebot v11](https://pypi.org/project/nonebot-adapter-cqhttp/2.0.0a16/)
+- QQ协议端：[go-cqhttp v1.0.0-rc3](https://github.com/Mrs4s/go-cqhttp)
 - 服务器：Windows Server 2016 64位数据中心版
 ### 部署：
 请参考[NoneBot2指南](https://v2.nonebot.dev/guide/)
