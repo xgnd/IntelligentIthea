@@ -761,20 +761,3 @@ def dict_shuffle(d) -> dict:
     for key in keys:
         order_d[key] = d[key]
     return dict(order_d)
-
-def FindPosition(x, target) -> int:
-    """ 查找插入列表元素在列表中的的位置 """
-    left = 0
-    right = len(x)-1
-    while left < right:
-        mid = (left+right+1)//2
-        if x[mid] < target:
-            right = mid-1
-        elif x[mid] == target:
-            left = mid
-        else:
-            left = mid+1
-            
-    if target in x or (left==0 and target <= x[0]) or target <= x[right]:
-        left += 1
-    return left
