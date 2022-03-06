@@ -20,6 +20,7 @@ class Config(BaseSettings):
     warehouse_data = wd
 
     season = data["rules"]["settings"]["season"]
+    season_name = data["rules"]["settings"]["season_name"]
 
     drawcard_times = data["rules"]["settings"]["drawcard_times"]   # 一天抽卡次数
     drawcard_cd = data["rules"]["settings"]["drawcard_cd"]   # 每次抽卡时间间隔，分钟

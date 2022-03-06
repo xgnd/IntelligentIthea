@@ -1,11 +1,13 @@
 import asyncio
 import aiohttp
+import base64
 import json
 import os
 import random
 import shutil
 from collections import OrderedDict
 from datetime import date, datetime
+from io import BytesIO
 from PIL import Image, ImageDraw, ImageFont
 
 from nonebot import get_driver
@@ -29,23 +31,20 @@ background_small = Image.open(os.path.join(
 background_middle = Image.open(os.path.join(
     image_route, "background_middle.png"))
 background_big = Image.open(os.path.join(image_route, "background_big.png"))
+white = Image.open(os.path.join(image_route, "white.png"))
 
 all_role_data = role_data["role"]["role_data"]
 all_card_dict = {}
 all_avatar_dict = {}
-all_grey_avatar_dict = {}
 for i in all_role_data.keys():
-    role_image_url = all_role_data[i]["url"].replace("file:///", "")
+    all_role_data[i]["url"] = os.path.join(
+        image_route, (role_data["role"]["role_data"][i]["url"]))
+    role_image_url = all_role_data[i]["url"]
     new_img = Image.open(role_image_url)
     all_card_dict[i] = new_img
-    role_image_url = all_role_data[i]["url"].replace(
-        "file:///", "").replace("image", "image/头像")
+    role_image_url = all_role_data[i]["url"].replace("image", "image/头像")
     new_img = Image.open(role_image_url)
     all_avatar_dict[i] = new_img
-    role_image_url = all_role_data[i]["url"].replace(
-        "file:///", "").replace("image", "image/灰头像")
-    new_img = Image.open(role_image_url)
-    all_grey_avatar_dict[i] = new_img
 
 
 ttf = ImageFont.truetype("C:/windows/fonts/arial.ttf", 15)
@@ -142,8 +141,7 @@ class DrawCardRule():
                     draw_role_length.insert(n, 1)
             self.draw_card_dict = dict(zip(draw_role_card, draw_role_length))
             await DrawCardRule.savedata(self, self.draw_card_dict)  # 保存数据
-            image = DrawCardRule.pic_composition(
-                self, list(self.draw_card_dict.keys()))
+            image = pic_composition(list(self.draw_card_dict.keys()))
             return self.draw_card_dict, "抽卡成功", image
 
     async def drawcard_record(self):
@@ -228,7 +226,6 @@ class DrawCardRule():
             if card_1 == card_2 and self.user_role[card_1] < 2:
                 return "这张卡不够用啦！", 0
 
-        print(self.user_role)
         # 如果是一样的卡且用户数据里此卡数量为2，直接删除此卡
         if card_1 == card_2 and self.user_role[card_1] == 2:
             self.user_role.pop(card_1)
@@ -264,7 +261,7 @@ class DrawCardRule():
         role = random.choices(list(compose_weights.keys()),
                               list(compose_weights.values()))[0]
         role_list.append(role)
-        image = DrawCardRule.pic_composition(self, role_list)   # 图片合成
+        image = pic_composition(role_list)   # 图片合成
 
         await DrawCardRule.savedata(self, {role: 1})   # 保存数据
 
@@ -273,73 +270,23 @@ class DrawCardRule():
     async def compose_get_card(self, grade):
         """ 一键合成时从用户数据里抽取两个多余的卡 """
         redundant_card = []
-        role_list = list(self.user_role.keys())
-
-        for i in range(len(self.user_role)):
-            card = random.choice(role_list)
-            if self.user_role[card] > 1 and grade == get_grade(card):
-                if self.user_role[card] >= 3:
-                    redundant_card.append(card)
-                    redundant_card.append(card)
-                else:
-                    redundant_card.append(card)
-            if redundant_card == 2:
+        role_dict = self.user_role
+        role_dict = sorted(role_dict.items(), key=lambda x: x[1], reverse=True)
+        
+        for key,value in role_dict:
+            if value > 1 and grade == get_grade(key):
+                if value>=3:
+                    redundant_card.append(key)
+                    redundant_card.append(key)
+                    break
+                redundant_card.append(key)
+            if len(redundant_card) == 2 or value == 1:
                 break
-            role_list.remove(card)
 
         if len(redundant_card) < 2:
             return 0, 0
-
-        return redundant_card[0], redundant_card[1]
-
-    def pic_composition(self, card_list):
-        """ 抽卡和合成图片合成 """
-        # 加载底图
-        new_img_list = []
-        j=0
-        for i in card_list:
-            new_img = all_card_dict[i]
-            new_img_list.append(new_img)
-            j+=1
-            if j==4:
-                break
-        print(new_img_list)
-        # 底图上需要P掉的区域
-        # 以左边界为准（left, upper, right, lower）
-        box = []
-        card_list_len = len(new_img_list)
-        if card_list_len == 1:
-            base_img = background_small
-            box.append((150, 70, 546, 626))
-        elif card_list_len == 2:
-            base_img = background_middle
-            box.append((70, 223, 466, 779))
-            box.append((536, 223, 932, 779))
-        elif card_list_len == 3:
-            base_img = Image.open(os.path.join(image_route, "background_big.png"))
-            box.append((177, 70, 573, 626))
-            box.append((750, 70, 1146, 626))
-            box.append((463, 696, 859, 1252))
-        elif card_list_len == 4:
-            base_img = Image.open(os.path.join(image_route, "background_big.png"))
-            box.append((177, 70, 573, 626))
-            box.append((750, 70, 1146, 626))
-            box.append((177, 696, 573, 1252))
-            box.append((750, 696, 1146, 1252))
-
-        for i in range(card_list_len):
-            base_img.paste(new_img_list[i], box[i])
-
-        base_img = base_img.resize((500, 500))
-        # 可以设置保存路径
         
-        save_route = image_route + \
-            '/cache/{filename}.png'.format(
-                filename=str(int(datetime.now().timestamp())))
-        base_img.save(save_route)
-        save_route = "file:///"+save_route
-        image = MessageSegment.image(file=save_route)
-        return image
+        return redundant_card[0], redundant_card[1]
 
     async def savedata(self, draw_card_dict):
         """ 保存数据 """
@@ -360,9 +307,7 @@ class DrawCardRule():
         role_length = len(self.user_data["role"])   # 取用户图鉴数
         card_length = sum([self.user_data["grade"]["grade_1"], self.user_data["grade"]
                            ["grade_2"], self.user_data["grade"]["grade_3"]])   # 取用户卡片数量
-        self.group_data['score'][self.qq] = role_length
-        self.group_data['score'] = dict(
-            sorted(self.group_data['score'].items(), key=lambda x: x[1], reverse=True))   # 用户按图鉴从多到少排序
+        self.group_data['score'] = await DrawCardRule.ranking_insert(self, self.qq, role_length)
         self.user_data['role_length'] = role_length
         self.user_data['card_length'] = card_length
 
@@ -372,6 +317,22 @@ class DrawCardRule():
         with open(self.group_data_url, 'w', encoding='utf-8') as f:
             f.write(json.dumps(self.group_data, ensure_ascii=False))
             f.close()
+    
+    async def ranking_insert(a, user, n) -> dict:
+        """ 将用户按图鉴数插入群排名中 """
+        k = list(a.keys())
+        v = list(a.values())
+
+        if user in k:
+            p = k.index(user)
+            k.pop(p)
+            v.pop(p)
+
+        p = FindPosition(v, n)
+
+        k.insert(p, user)
+        v.insert(p, n)
+        return dict(zip(k, v))
 
     async def userdata(self):
         """ 检测是否有群数据文件 """
@@ -398,110 +359,19 @@ class DrawCardRule():
     async def view_user_data(self):
         """ 查看仓库 """
         await DrawCardRule.userdata(self)
+        DrawCardRule.get_group_data(self)
+        DrawCardRule.get_user_data(self)
 
-        with open(self.group_data_url, 'r', encoding='utf-8-sig') as f:
-            group_data = list(json.load(f)["score"].keys())
-            if self.qq in group_data:
-                member_ranking = await DrawCardRule.get_group_member_ranking(self)
-            else:
-                member_ranking = len(group_data) + 1
-            f.close()
-
-        with open(self.user_data_url, 'r', encoding='utf-8-sig') as f:
-            user_data = json.load(f)
-            role_length, card_lenth, role, grade = user_data["role_length"], user_data[
-                "card_length"], user_data["role"], user_data["grade"]
-            all_role_length = get_role_length()   # 取角色总数
-            f.close()
-
-        if "warehouse" not in list(user_data.keys()):
-            if len(role.keys()) == 0:
-                image = os.path.join(image_route, "all.png")
-                image = MessageSegment.image(file="file:///"+image)
-                return image, role_length, all_role_length, card_lenth, role, grade, member_ranking
-
-            image = DrawCardRule.warehouse_pic_composition(self, role)
-
-            user_data["warehouse"] = role
-            with open(self.user_data_url, 'w', encoding='utf-8') as f:
-                f.write(json.dumps(user_data, ensure_ascii=False))
-                f.close()
-            return image, role_length, all_role_length, card_lenth, role, grade, member_ranking
+        if self.qq in self.user_score.keys():
+            member_ranking = await DrawCardRule.get_group_member_ranking(self)
         else:
-            add_pic = {}
-            user_warehouse = user_data["warehouse"]
+            member_ranking = len(self.user_score.keys()) + 1
 
-            # 查看角色图片是否在仓库，是否能够对应得上
-            variance = dict_reduce(role, user_warehouse)
+        all_role_length = get_role_length()
 
-            if len(variance) == 0:
-                image = os.path.join(
-                    data_route, self.group, self.qq+".png")
-                save_route = "file:///"+image
-                image = MessageSegment.image(file=save_route)
+        image = warehouse_pic_composition(self.user_role)
 
-                return image, role_length, all_role_length, card_lenth, role, grade, member_ranking
-
-            image = DrawCardRule.warehouse_pic_composition(
-                self, variance, True)
-            user_data["warehouse"] = user_data["role"]
-            with open(self.user_data_url, 'w', encoding='utf-8') as f:
-                f.write(json.dumps(user_data, ensure_ascii=False))
-                f.close()
-            
-            return image, role_length, all_role_length, card_lenth, role, grade, member_ranking
-
-    def warehouse_pic_composition(self, role_list, if_warehouse=False):
-        """ 仓库图片合成 """
-        print("更改角色列表：", role_list, "是否复用用户仓库图片：", if_warehouse)
-        if if_warehouse:
-            warehouse_pic = os.path.join(
-                data_route, self.group, self.qq+".png")
-        if not if_warehouse:
-            warehouse_pic = os.path.join(image_route, "all.png")
-        base_img = Image.open(warehouse_pic)
-
-        all_role_list = role_data["role"]["role_data"]
-
-        role_list_keys = list(role_list.keys())
-        
-        new_img_list = []
-        for i in role_list_keys:
-            if role_list[i] != 404:
-                new_img = all_avatar_dict[i]
-                new_img_list.append(new_img)
-            else:
-                new_img = all_grey_avatar_dict[i]
-                new_img_list.append(new_img)
-
-        box = []
-        
-        for i in role_list_keys:
-            box.append(tuple(warehouse_data[i]))
-        
-        n = 0
-        for i in role_list_keys:
-            # for j in box:
-            if role_list[i] != 404:
-                draw = ImageDraw.Draw(new_img_list[n])
-                draw.text((61, 61), '×' +
-                            str(role_list[i]), font=ttf, fill=(0, 0, 0))
-                base_img.paste(
-                    new_img_list[n], box[n])
-            else:
-                base_img.paste(
-                    new_img_list[n], box[n])
-            n += 1
-        
-        base_img.resize((500, 500))
-
-        save_route = os.path.join(data_route, self.group, self.qq+".png")
-        base_img.save(save_route)
-        save_route = "file:///"+save_route
-        image = MessageSegment.image(file=save_route)
-        
-
-        return image
+        return image, self.role_length, all_role_length, self.card_length, self.user_role, self.user_role_grade, member_ranking
 
     def get_group_ranking(self) -> dict:
         """ 取群排名及图鉴完成度 """
@@ -510,14 +380,14 @@ class DrawCardRule():
 
     def get_old_group_ranking(self, n) -> dict:
         """ 取群历史排名及图鉴完成度，传入一个代表赛季的整数 """
-        self.group_data_url = os.path.join(
+        self.group_data_url_history = os.path.join(
             data_route, "history", "s"+str(n), self.group, "all.json")
-        with open(self.group_data_url, 'r', encoding='utf-8-sig') as f:
-            self.group_data = json.load(f)
-            self.user = self.group_data['user']
-            self.user_score = self.group_data['score']
+        with open(self.group_data_url_history, 'r', encoding='utf-8-sig') as f:
+            self.group_data_history = json.load(f)
+            self.user_history = self.group_data_history['user']
+            self.user_score_history = self.group_data_history['score']
             f.close()
-        return self.user_score
+        return self.user_score_history
 
     async def get_group_member_ranking(self) -> int:
         """ 取个人在群里的排名 """
@@ -602,7 +472,7 @@ def get_role_length() -> int:
 
 def get_image(number) -> str:
     """ 取角色图片，返回一个图片url """
-    image_url = role_data["role"]["role_data"][number]["url"]
+    image_url = "file:///" + os.path.join(image_route, (role_data["role"]["role_data"][number]["url"]))
     return image_url
 
 
@@ -612,10 +482,14 @@ def get_grade(number) -> int:
     return role_grade
 
 def get_introduction(number) -> int:
-    """ 取角色等级，返回一个整数 """
+    """ 取角色介绍，返回一个字符串 """
     role_introduction = role_data["role"]["role_data"][number]["introduction"]
     return role_introduction
 
+def get_season_name() -> str:
+    """ 取赛季名字，返回赛季名字 """
+    season_name = config.season_name["s"+str(config.season)]
+    return season_name
 
 async def get_sticker(number) -> MessageSegment:
     """ 
@@ -634,7 +508,7 @@ async def get_sticker(number) -> MessageSegment:
     return image
 
 
-def numbername(number):
+def number2name(number):
     """ 编号转名字，传入一个代表编号的字符串或字符串列表 """
     role_data_number = role_data["number"]
     try:
@@ -647,7 +521,7 @@ def numbername(number):
         return 0
 
 
-def namenumber(name):
+def name2number(name):
     """ 名字转编号，传入一个代表名字的字符串或字符串列表 """
     role_data_number = role_data["number"]
     role_data_name = dict(
@@ -661,6 +535,13 @@ def namenumber(name):
     except:
         return 0
 
+def pic2bs4(img):
+    """ 图片转base64，传入一个Image对象 """
+    buf = BytesIO()
+    img = img.convert('RGB')
+    img.save(buf, format='JPEG')
+    base64_str = base64.b64encode(buf.getvalue()).decode()
+    return base64_str
 
 def season_over():
     files = os.listdir(data_route)
@@ -673,6 +554,72 @@ def season_over():
     os.makedirs(file_path)
     for i in files:
         shutil.move(data_route+"/"+i, file_path+"/"+i)
+
+def pic_composition(card_list):
+    """ 抽卡和合成图片合成 """
+    # 加载底图
+    new_img_list = []
+    j = 0
+    for i in card_list:
+        new_img = all_card_dict[i]
+        new_img_list.append(new_img)
+        j += 1
+        if j == 4:
+            break
+
+    # 底图上需要P掉的区域，以左边界为准（left, upper, right, lower）
+    box = []
+
+    card_list_len = len(new_img_list)
+    if card_list_len == 1:
+        base_img = background_small
+        box.append((150, 70, 546, 626))
+    elif card_list_len == 2:
+        base_img = background_middle
+        box.append((70, 223, 466, 779))
+        box.append((536, 223, 932, 779))
+    elif card_list_len == 3:
+        base_img = Image.open(os.path.join(
+            image_route, "background_big.png"))
+        box.append((177, 70, 573, 626))
+        box.append((750, 70, 1146, 626))
+        box.append((463, 696, 859, 1252))
+    elif card_list_len == 4:
+        base_img = Image.open(os.path.join(
+            image_route, "background_big.png"))
+        box.append((177, 70, 573, 626))
+        box.append((750, 70, 1146, 626))
+        box.append((177, 696, 573, 1252))
+        box.append((750, 696, 1146, 1252))
+
+    for i in range(card_list_len):
+        base_img.paste(new_img_list[i], box[i])
+    base_img=base_img.resize((1000,1000))
+    image = MessageSegment.image(file=f'base64://{pic2bs4(base_img)}')
+    return image
+
+
+def warehouse_pic_composition(role_dict):
+    """ 仓库图片合成 """
+    warehouse_pic = os.path.join(image_route, "all.png")
+    base_img = Image.open(warehouse_pic)
+    role_list_keys = list(role_dict.keys())
+
+    n = 0
+    for i in role_list_keys:
+        new_img = all_avatar_dict[i]
+        box = tuple(warehouse_data[i])
+        new_img.paste(white, (60, 60))
+        draw = ImageDraw.Draw(new_img)
+        draw.text((61, 61), '×' +
+                  str(role_dict[i]), font=ttf, fill=(0, 0, 0))
+        base_img.paste(new_img, box)
+
+        n += 1
+
+    image = MessageSegment.image(file=f'base64://{pic2bs4(base_img)}')
+
+    return image
 
 
 class GlobalHandle():
@@ -829,23 +776,19 @@ def dict_shuffle(d) -> dict:
         order_d[key] = d[key]
     return dict(order_d)
 
-
-def dict_reduce(dict_1, dict_2) -> dict:
-    """ 字典找不同，传入的字典的值只能是整数 """
-    re_dict = {}
-    list_1_keys = list(dict_1.keys())
-    list_2_keys = list(dict_2.keys())
-    for i in list_1_keys:
-        if i in list_2_keys:
-            if dict_1[i] != dict_2[i]:
-                re_dict[i] = dict_1[i]
-                continue
+def FindPosition(x, target) -> int:
+    """ 查找插入列表元素在列表中的的位置 """
+    left = 0
+    right = len(x)-1
+    while left < right:
+        mid = (left+right+1)//2
+        if x[mid] < target:
+            right = mid-1
+        elif x[mid] == target:
+            left = mid
         else:
-            re_dict[i] = dict_1[i]
-
-    for i in list_2_keys:
-        if i not in list(dict_1.keys()):
-            re_dict[i] = 404
-
-    return re_dict
-
+            left = mid+1
+            
+    if target in x or (left==0 and target <= x[0]) or target <= x[right]:
+        left += 1
+    return left

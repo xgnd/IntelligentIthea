@@ -66,7 +66,7 @@ async def draw_handler(bot: Bot, event: Event):
             elif grade == 3:
                 grade = "普通"
             build_msg += grade + \
-                "「{name}」".format(name=numbername(i)) + \
+                "「{name}」".format(name=number2name(i)) + \
                 "×" + str(card[i]) + "\n"
 
         if if_poke:
@@ -118,7 +118,7 @@ async def ranking_handler(bot: Bot, event: Event):
                     "图鉴完成度：" + str(score[i])
                 if n == 10:
                     break
-            msg = MessageSegment.face(99) + "◇━━彼界微光排行榜━━◇" + \
+            msg = MessageSegment.face(99) + f"◇━━{get_season_name()}排行榜━━◇" + \
                 MessageSegment.face(99) + msg_1
             await ranking.finish(msg)
 
@@ -144,18 +144,18 @@ async def handle_first_receive(bot: Bot, event: Event):
             if_card_1 = card[0][:1].isnumeric()
             if_card_2 = card[1][:1].isnumeric()
             if not if_card_1 and not if_card_2:
-                card_list = namenumber(card)
+                card_list = name2number(card)
             elif not if_card_1:
-                card_list[0] = namenumber(card[0])
+                card_list[0] = name2number(card[0])
             elif not if_card_2:
-                card_list[1] = namenumber(card[1])
+                card_list[1] = name2number(card[1])
 
             # 若有不存编号，返回0
             lose_number = []
             for i in range(len(card_list)):
                 if card_list[i] == 0:   # 对应上面的名字转编号，利用编号转名字判断该名字是否存在
                     lose_number.append(card[i])
-                elif numbername(card_list[i]) == 0:   # 利用编号转名字判断该编号是否存在
+                elif number2name(card_list[i]) == 0:   # 利用编号转名字判断该编号是否存在
                     lose_number.append(card[i])
 
             # 发送提示编号不存在的消息
@@ -183,7 +183,7 @@ async def handle_first_receive(bot: Bot, event: Event):
             elif grade == 3:
                 grade = "普通"
             msg = grade + \
-                "「{name}」".format(name=numbername(card)) + "×1"
+                "「{name}」".format(name=number2name(card)) + "×1"
             msg = MessageSegment.at(event.user_id) + "芜湖~你合成了一张{name}卡".format(name=grade) + "\n" + image + "\n" + "------------------------------" + \
                 "\n" + "获得了：" + "\n" + msg
 
@@ -226,7 +226,7 @@ async def handle_first_receive(bot: Bot, event: Event):
             elif grade == 3:
                 grade = "普通"
             msg = grade + \
-                "「{name}」".format(name=numbername(card)) + "×1"
+                "「{name}」".format(name=number2name(card)) + "×1"
             msg = MessageSegment.at(event.user_id) + "芜湖~你合成了一张{name}卡".format(name=grade) + "\n" + image + "\n" + "------------------------------" + \
                 "\n" + "获得了：" + "\n" + msg
 
@@ -260,11 +260,11 @@ async def handle_name(bot: Bot, event: Event, state: T_State):
         # 判断卡片是否为编号
         if_card = name[:1].isnumeric()
         if if_card:
-            name = numbername(name)
+            name = number2name(name)
             if name == 0:   # 判断该编号是否存在
                 await show.finish("该编号不存在")
 
-        number = namenumber(name)
+        number = name2number(name)
         if number == 0:   # 判断该名字是否存在
             await show.finish("你想查看的角色不存在，请重新输入！")
 
@@ -466,7 +466,7 @@ async def sign_in_handler(bot: Bot, event: Event):
 scheduler = require("nonebot_plugin_apscheduler").scheduler
 
 
-@scheduler.scheduled_job("date", run_date="2021-8-13 23:59:59", id="upgrade")
+@scheduler.scheduled_job("date", run_date="2022-2-18 21:00:00", id="upgrade")
 async def upgrade():
     config.while_season_end = True
     bot = list(get_bots().values())[0]
@@ -477,7 +477,7 @@ async def upgrade():
     for i in _group_list:
         group_list.append(i["group_id"])
 
-    msg = ["咳咳咳，时鸽两个月，又要开始愉快的开始赛季结算了！（正在全群广播）","听说这个赛季里出现了满卡的大佬，佩服佩服","另外通知一个好消息！","我的莲又要上线啦！","她将活跃在各个群里，多多支持啦~","好了，下面开始数据统计","统计赛季数据ing..."]
+    msg = ["大家好哟！又要开始开始赛季结算咯！（正在全群广播）","我记得上次赛季结算还是在上次呢","好了，下面开始数据统计","统计赛季数据ing..."]
     for n in msg:
         for i in group_list:
             try:
@@ -509,7 +509,7 @@ async def upgrade():
         except:
             pass
         await asyncio.sleep(2)
-        msg = f"◇━━赛季数据━━◇\n本赛季玩家数：{len(score_member)}\n三阶段玩家数：{level_3}\n二阶段玩家数：{level_2}\n一阶段玩家数：{level_1}"
+        msg = f"◇━━赛季数据━━◇\n本赛季玩家数：{len(score_member)}\n肝帝级玩家数：{level_3}\n普通级玩家数：{level_2}\n萌新级玩家数：{level_1}"
         try:
             await bot.call_api("send_group_msg", group_id=i, message=msg)
         except:
@@ -631,7 +631,7 @@ async def exchange_got(bot: Bot, event: Event, state: T_State):
                 elif grade == 3:
                     grade = "普通"
                 build_msg += grade + \
-                    "「{name}」".format(name=numbername(i)) + \
+                    "「{name}」".format(name=number2name(i)) + \
                     "×" + str(card[i]) + "\n"
 
             msg = MessageSegment.at(event.user_id) + "这些卡送你了~" + "\n" + image + "\n" + "------------------------------" + \
@@ -693,16 +693,3 @@ async def group_member_add_handle(bot: Bot, event: Event):
         await asyncio.sleep(random.randint(1, 5))
         msg = await get_sticker(2)
         await group_member_add.finish(msg)
-
-
-async def _group_add_request(bot: Bot, event: Event, state: T_State) -> bool:
-    return isinstance(event, GroupRequestEvent)
-
-group_add_request = on_request(_group_add_request, priority=2, block=True)
-
-
-@group_add_request.handle()
-async def group_add_request_handle(bot: Bot, event: Event):
-    if event.user_id in bot.config.superusers:
-        await bot.call_api("set_group_add_request", flag=event.flag, group_id=event.group_id, approve=True)
-    await bot.call_api("set_group_add_request", flag=event.flag, group_id=event.group_id, approve=False, reason="此机器人正在调试")

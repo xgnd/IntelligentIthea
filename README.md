@@ -1,5 +1,5 @@
 # 智能型艾瑟雅（IntelligentIthea）
-<div align=center><img src="https://app.xgnd.net/4_G7WH4NB3WX_8J_HQ4R9_J.png" width="20%"/>
+<div align=center><img src="https://img.xgnd.net/Ithea.png" width="20%"/>
 
 **智能型艾瑟雅（IntelligentIthea）：一个终末三问（末日时在做什么？有没有空？可以来拯救吗？）抽卡游戏qq机器人**</div>
 <p align=center>

@@ -7,6 +7,7 @@ from nonebot.typing import T_State
 
 from .ChatBotApi import baiduBot
 from .ChatBotApi import txbot
+from .ChatBotApi import itpkBot
 from .config import config
 
 
@@ -71,6 +72,9 @@ async def handle_first_receive(bot: Bot, event: Event, state: dict):
 
         app_id = config.tx_app_id
         appkey = config.tx_appkey
+        
+        itpk_api_key = config.itpk_api_key
+        itpk_api_secret = config.itpk_api_secret
 
         if API_Key and Secret_Key and bot_id:
             state['Bot'] = baiduBot.BaiduBot(API_Key=API_Key, Secret_Key=Secret_Key, bot_id=bot_id, session=session)
@@ -99,7 +103,7 @@ def remove_cqcode(msg: str) -> str:
     return re.sub('\[.*?\]','',msg)
 
 
-@ELF_bot.got("ELF_bot", prompt="")
+@ELF_bot.got("ELF_bot", prompt=None)
 async def handle_Chat(bot: Bot, event: Event, state: dict):
     if event.__getattribute__('message_type') == 'private':
         group_id = None
@@ -119,10 +123,24 @@ async def handle_Chat(bot: Bot, event: Event, state: dict):
         return
 
     bot = state['Bot']
-    r_msg = await bot.sendMsg(msg)
+    try:
+        r_msg = await itpkBot.get_message_reply(msg)
+    except:
+        try:
+            r_msg = await itpkBot.get_message_reply(msg)
+        except:
+            r_msg = await itpkBot.get_message_reply(msg)
+    r_msg = r_msg['answer']
+    if r_msg in ["艾瑟雅无法理解你的意思","好高深哎，看来我还要学习学习","艾瑟雅暂时还不懂这些"]:
+        try:
+            rr_msg = await bot.sendMsg(msg)['answer']
+            r_msg = rr_msg
+        except:
+            pass
+        
 
     if group_id is not None:
         res_messages = MessageSegment.at(event.user_id)
     else:
         res_messages = MessageSegment.text('')
-    await ELF_bot.reject(res_messages + MessageSegment.text(r_msg['answer']))
+    await ELF_bot.reject(res_messages + MessageSegment.text(r_msg))
