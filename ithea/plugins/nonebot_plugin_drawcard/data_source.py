@@ -307,7 +307,9 @@ class DrawCardRule():
         role_length = len(self.user_data["role"])   # 取用户图鉴数
         card_length = sum([self.user_data["grade"]["grade_1"], self.user_data["grade"]
                            ["grade_2"], self.user_data["grade"]["grade_3"]])   # 取用户卡片数量
-        self.group_data['score'] = await DrawCardRule.ranking_insert(self, self.qq, role_length)
+        self.group_data['score'][self.qq] = role_length
+        self.group_data['score'] = dict(
+            sorted(self.group_data['score'].items(), key=lambda x: x[1], reverse=True))   # 用户按图鉴从多到少排序
         self.user_data['role_length'] = role_length
         self.user_data['card_length'] = card_length
 
@@ -317,22 +319,6 @@ class DrawCardRule():
         with open(self.group_data_url, 'w', encoding='utf-8') as f:
             f.write(json.dumps(self.group_data, ensure_ascii=False))
             f.close()
-    
-    async def ranking_insert(a, user, n) -> dict:
-        """ 将用户按图鉴数插入群排名中 """
-        k = list(a.keys())
-        v = list(a.values())
-
-        if user in k:
-            p = k.index(user)
-            k.pop(p)
-            v.pop(p)
-
-        p = FindPosition(v, n)
-
-        k.insert(p, user)
-        v.insert(p, n)
-        return dict(zip(k, v))
 
     async def userdata(self):
         """ 检测是否有群数据文件 """
