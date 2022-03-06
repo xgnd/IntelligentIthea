@@ -2,7 +2,7 @@ import random
 import re
 
 from nonebot import on_message
-from nonebot.adapters.cqhttp import Bot, Event, MessageSegment, unescape
+from nonebot.adapters.onebot.v11 import Bot, Event, MessageSegment, unescape
 from nonebot.log import logger
 from nonebot.rule import Rule
 from nonebot.typing import T_State

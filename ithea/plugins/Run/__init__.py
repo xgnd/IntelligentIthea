@@ -2,8 +2,8 @@ from nonebot.typing import T_State
 from nonebot.rule import to_me
 from nonebot.adapters import Bot, Event, Message
 from nonebot import get_driver, on_command, on_startswith, on_regex
-from nonebot.adapters.cqhttp import MessageSegment, GroupRequestEvent,GroupMessageEvent
-from nonebot.adapters.cqhttp.permission import GROUP
+from nonebot.adapters.onebot.v11 import MessageSegment, GroupRequestEvent,GroupMessageEvent
+from nonebot.adapters.onebot.v11.permission import GROUP
 
 
 import asyncio

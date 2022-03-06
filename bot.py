@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 import nonebot
-from nonebot.adapters.cqhttp import Bot as CQHTTPBot
-from nonebot.adapters.cqhttp import MessageSegment
+from nonebot.adapters.onebot.v11 import Adapter
 # Custom your logger
 from nonebot.log import logger, default_format
 
@@ -17,10 +16,9 @@ nonebot.init()
 app = nonebot.get_asgi()
 
 driver = nonebot.get_driver()
-driver.register_adapter("cqhttp", CQHTTPBot)
+driver.register_adapter(Adapter)
 
 nonebot.load_plugins("ithea/plugins")
-nonebot.load_builtin_plugins()
 # nonebot.load_plugin("chtholly.plugins.nonebot_plugin_simdraw")
 # Modify some config / config depends on loaded configs
 
@@ -28,4 +26,4 @@ nonebot.load_builtin_plugins()
 # do something...
 
 if __name__ == "__main__":
-    nonebot.run(app="bot:app")
+    nonebot.run(app="__mp_main__:app")

@@ -6,7 +6,7 @@ import time
 
 import requests  # 导入网页请求库
 from bs4 import BeautifulSoup  # 导入网页解析库
-from nonebot.adapters.cqhttp import MessageSegment
+from nonebot.adapters.onebot.v11 import MessageSegment
 from PIL import Image, ImageDraw, ImageFont
 
 project_path = os.path.dirname(os.path.abspath(__file__))

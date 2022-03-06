@@ -1,6 +1,6 @@
 import re
 from nonebot import on_command,on_startswith
-from nonebot.adapters.cqhttp import Bot, Event, MessageSegment, unescape
+from nonebot.adapters.onebot.v11 import Bot, Event, MessageSegment
 from nonebot.log import logger
 from nonebot.rule import Rule
 from nonebot.typing import T_State
@@ -54,7 +54,7 @@ ELF_bot = on_startswith('', rule=chat_me(), priority=1)
 
 
 @ELF_bot.handle()
-async def handle_first_receive(bot: Bot, event: Event, state: dict):
+async def handle_first_receive(bot: Bot, event: Event, state: T_State):
     if event.__getattribute__('message_type') == 'private':
         group_id = None
     else:
@@ -99,12 +99,12 @@ async def handle_first_receive(bot: Bot, event: Event, state: dict):
 
 
 def remove_cqcode(msg: str) -> str:
-    msg = unescape(msg)
+    # msg = unescape(msg)
     return re.sub('\[.*?\]','',msg)
 
 
 @ELF_bot.got("ELF_bot", prompt=None)
-async def handle_Chat(bot: Bot, event: Event, state: dict):
+async def handle_Chat(bot: Bot, event: Event, state: T_State):
     if event.__getattribute__('message_type') == 'private':
         group_id = None
     else:

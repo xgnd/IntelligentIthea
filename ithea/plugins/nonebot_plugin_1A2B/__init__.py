@@ -1,8 +1,8 @@
 import random
 import asyncio
-from nonebot.adapters.cqhttp.permission import GROUP
+from nonebot.adapters.onebot.v11.permission import GROUP
 from nonebot import get_driver, message, on_message
-from nonebot.adapters.cqhttp import Bot, Event, MessageSegment
+from nonebot.adapters.onebot.v11 import Bot, Event, MessageSegment
 
 from .config import Config
 from .data_source import *
@@ -11,11 +11,11 @@ global_config = get_driver().config
 config = Config(**global_config.dict())
 
 
-game = on_message(permission=GROUP, priority=3)
+game = on_message(permission=GROUP,block=False, priority=3)
 
 
 @game.handle()
-async def handle_first_receive(bot: Bot, event: Event, state: dict):
+async def handle_first_receive(bot: Bot, event: Event):
     message = str(event.message)
     if message == "1A2B" or message == "1a2b":
         await game.finish("🔥◇━━1A2B━━◇🔥\n发送【1A2B规则】阅读游戏规则\n发送【1A2B开始】开始游戏\n发送【1A2B结束】结束游戏")

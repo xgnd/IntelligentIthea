@@ -2,7 +2,7 @@ import random
 import os
 import json
 from nonebot import get_driver
-from nonebot.adapters.cqhttp import MessageSegment
+from nonebot.adapters.onebot.v11 import MessageSegment
 
 from .config import Config
 

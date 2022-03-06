@@ -1,7 +1,7 @@
 ﻿from nonebot import on_startswith
 from nonebot.adapters import Bot, Event, Message
-from nonebot.adapters.cqhttp import MessageSegment
-from nonebot.adapters.cqhttp.permission import GROUP
+from nonebot.adapters.onebot.v11 import MessageSegment
+from nonebot.adapters.onebot.v11.permission import GROUP
 import random
 from .data_source import *
 

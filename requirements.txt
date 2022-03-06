@@ -1,8 +1,0 @@
-APScheduler==3.6.3
-beautifulsoup4==4.9.3
-bs4==0.0.1
-fastapi==0.68.2
-httpx==0.21.1
-nonebot-adapter-cqhttp==2.0.0a16
-nonebot2==2.0.0a16
-typing-extensions==3.10.0.0
