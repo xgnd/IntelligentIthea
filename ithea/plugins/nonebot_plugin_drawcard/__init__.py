@@ -300,14 +300,9 @@ async def handle_name(bot: Bot, event: GroupMessageEvent, state: T_State):
         if not if_role:
             await show.finish("你尚未拥有该角色哟")
         role_url = get_image(number)
-        role_grade = get_grade(number)
+        role_grade: int = get_grade(number)
         role_introduction = get_introduction(number)
-        if role_grade == 1:
-            role_grade = "超稀有"
-        elif role_grade == 2:
-            role_grade = "稀有"
-        elif role_grade == 3:
-            role_grade = "普通"
+        role_grade: str = config.grade_to_grade_name[role_grade]
         image = MessageSegment.image(file=role_url)
         if not role_introduction:
             msg = MessageSegment.at(event.user_id) + "嘿咻~{name}给您呈上".format(
