@@ -461,6 +461,7 @@ async def sign_in_handler(bot: Bot, event: Event):
                         await asyncio.sleep(1)
                         msg = await get_sticker(4)
                         await sign_in.finish(msg)
+group_poke.handle()(sign_in_handler)
 
 
 scheduler = require("nonebot_plugin_apscheduler").scheduler
