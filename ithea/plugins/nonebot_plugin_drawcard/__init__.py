@@ -4,7 +4,7 @@ from nonebot.matcher import Matcher
 from nonebot.adapters import Bot, Event, Message
 from nonebot.permission import SUPERUSER
 from nonebot import get_driver, on_command, on_notice, on_startswith, on_request, on_message
-from nonebot.adapters.cqhttp import PokeNotifyEvent, MessageSegment, GroupRequestEvent, GroupIncreaseNoticeEvent
+from nonebot.adapters.cqhttp import PokeNotifyEvent, MessageEvent, GroupMessageEvent, GroupIncreaseNoticeEvent, MessageSegment, GroupRequestEvent, GroupIncreaseNoticeEvent
 from nonebot.adapters.cqhttp.permission import GROUP
 from nonebot import require, get_bots
 import random
@@ -21,7 +21,7 @@ menu = on_startswith("菜单", permission=GROUP, priority=2, block=True)
 
 
 @menu.handle()
-async def menu_handler(bot: Bot, event: Event):
+async def menu_handler(bot: Bot, event: GroupMessageEvent):
     if not config.while_season_end:
         if str(event.get_message()) == "菜单":
             msg = MessageSegment.face(144) + "◇━━菜单━━◇" + MessageSegment.face(144) + "\n" + MessageSegment.face(54) + "抽卡（或戳一戳）" + "\n" + \
@@ -34,7 +34,7 @@ draw = on_startswith("抽卡", permission=GROUP, priority=2, block=True)
 
 
 @draw.handle()
-async def draw_handler(bot: Bot, event: Event):
+async def draw_handler(bot: Bot, event: GroupMessageEvent):
     if not config.while_season_end:
         if_poke = isinstance(event, PokeNotifyEvent)
         if not if_poke:
@@ -89,7 +89,7 @@ async def draw_handler(bot: Bot, event: Event):
 # 用戳一戳触发抽卡
 async def _group_poke(bot: Bot, event: Event, state: T_State) -> bool:
     if not config.while_season_end:
-        return (isinstance(event, PokeNotifyEvent) and event.is_tome() == True)
+        return isinstance(event, PokeNotifyEvent) and event.is_tome()
 
 group_poke = on_notice(_group_poke, priority=2, block=True)
 group_poke.handle()(draw_handler)
@@ -99,7 +99,7 @@ ranking = on_startswith("排行榜", permission=GROUP, priority=2, block=True)
 
 
 @ranking.handle()
-async def ranking_handler(bot: Bot, event: Event):
+async def ranking_handler(bot: Bot, event: GroupMessageEvent):
     if not config.while_season_end:
         if str(event.get_message()) == "排行榜":
             ranking_h = DrawCardRule(event.group_id, event.user_id)
@@ -127,7 +127,7 @@ compose = on_startswith("合成", permission=GROUP, priority=2, block=True)
 
 
 @compose.handle()
-async def handle_first_receive(bot: Bot, event: Event):
+async def handle_first_receive(bot: Bot, event: GroupMessageEvent):
     if not config.while_season_end:
         card = str(event.get_message()).strip()
         card = card[2:].strip()
@@ -201,7 +201,7 @@ compose_oneclick = on_startswith(
 
 
 @compose_oneclick.handle()
-async def handle_first_receive(bot: Bot, event: Event):
+async def handle_first_receive(bot: Bot, event: GroupMessageEvent):
     if not config.while_season_end:
         card = str(event.get_message()).strip()
         card = card[4:].strip().replace(" ", "")
@@ -243,7 +243,7 @@ show = on_startswith("查看", permission=GROUP, priority=3, block=True)
 
 
 @show.handle()
-async def handle_first_receive(bot: Bot, event: Event, state: T_State):
+async def handle_first_receive(bot: Bot, event: GroupMessageEvent, state: T_State):
     if not config.while_season_end:
         args = str(event.get_message()).strip().replace(
             " ", "")
@@ -254,7 +254,7 @@ async def handle_first_receive(bot: Bot, event: Event, state: T_State):
 
 
 @show.got("name", prompt="你想查看哪个角色呢？")
-async def handle_name(bot: Bot, event: Event, state: T_State):
+async def handle_name(bot: Bot, event: GroupMessageEvent, state: T_State):
     if not config.while_season_end:
         name = state["name"]
         # 判断卡片是否为编号
@@ -302,7 +302,7 @@ view = on_startswith("查看仓库", permission=GROUP, priority=2, block=True)
 
 
 @view.handle()
-async def view_handler(bot: Bot, event: Event):
+async def view_handler(bot: Bot, event: GroupMessageEvent):
     if not config.while_season_end:
         if str(event.get_message()) == "查看仓库":
             view_h = DrawCardRule(event.group_id, event.user_id)
@@ -320,7 +320,7 @@ role_list = on_startswith("卡牌列表", permission=GROUP, priority=2, block=Tr
 
 
 @role_list.handle()
-async def role_list_handler(bot: Bot, event: Event):
+async def role_list_handler(bot: Bot, event: GroupMessageEvent):
     if not config.while_season_end:
         if str(event.get_message()) == "卡牌列表":
             all_role_list = get_all_role_name()
@@ -339,7 +339,7 @@ role_number = on_startswith("编号图", permission=GROUP, priority=2, block=Tru
 
 
 @role_number.handle()
-async def role_number_handler(bot: Bot, event: Event):
+async def role_number_handler(bot: Bot, event: GroupMessageEvent):
     if not config.while_season_end:
         if str(event.get_message()) == "编号图":
             image = get_number_pic()
@@ -350,7 +350,7 @@ async def role_number_handler(bot: Bot, event: Event):
 personal_info = on_startswith("个人信息", permission=GROUP, priority=2, block=True)
 
 @personal_info.handle()
-async def personal_info_handler(bot: Bot, event: Event):
+async def personal_info_handler(bot: Bot, event: GroupMessageEvent):
     if not config.while_season_end:
         if str(event.get_message()) == "个人信息":
             score_handle = GlobalHandle(event.group_id, event.user_id)
@@ -380,7 +380,7 @@ oneword = on_startswith("一言", permission=GROUP, priority=2, block=True)
 
 
 @oneword.handle()
-async def oneword_hander(bot: Bot, event: Event):
+async def oneword_hander(bot: Bot, event: GroupMessageEvent):
     if not config.while_season_end:
         if str(event.get_message()) == "一言":
             word, source = await get_oneword()
@@ -392,7 +392,7 @@ sign_in = on_startswith("签到", permission=GROUP, priority=2, block=True)
 
 
 @sign_in.handle()
-async def sign_in_handler(bot: Bot, event: Event):
+async def sign_in_handler(bot: Bot, event: GroupMessageEvent):
     if not config.while_season_end:
         if str(event.get_message()) == "签到":
             sign_in_h = DrawCardRule(event.group_id, event.user_id)
@@ -603,7 +603,7 @@ exchange = on_startswith("兑换", permission=GROUP, priority=2, block=True)
 
 
 @exchange.handle()
-async def exchange_handle(bot: Bot, event: Event, state: T_State):
+async def exchange_handle(bot: Bot, event: GroupMessageEvent, state: T_State):
     commodity = str(event.get_message())[2:].strip()
     print("兑换的商品", commodity)
     if commodity:
@@ -611,7 +611,7 @@ async def exchange_handle(bot: Bot, event: Event, state: T_State):
 
 
 @exchange.got("commodity", prompt="◇━商品列表━◇\n" + "⭐️抽卡（90币）" + "\n" + "------------------------------" + "\n" + "请问要兑换什么呢~")
-async def exchange_got(bot: Bot, event: Event, state: T_State):
+async def exchange_got(bot: Bot, event: GroupMessageEvent, state: T_State):
     commodity = state["commodity"]
     if commodity == "抽卡":
         score_handle = GlobalHandle(event.group_id, event.user_id)
@@ -659,7 +659,7 @@ group_member_add = on_notice(_group_member_add, priority=2, block=True)
 
 
 @group_member_add.handle()
-async def group_member_add_handle(bot: Bot, event: Event):
+async def group_member_add_handle(bot: Bot, event: GroupIncreaseNoticeEvent):
     if not config.while_season_end:
         # 获取qq头像
         image = MessageSegment.image(
