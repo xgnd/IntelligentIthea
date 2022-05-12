@@ -86,7 +86,6 @@ class DrawCardRule():
                 return False
             else:
                 return True
-            f.close()
 
     async def drawcard(self, exchange=False):
         """ 抽卡，返回角色名字列表或没到时间提示 """
@@ -266,6 +265,81 @@ class DrawCardRule():
         await DrawCardRule.savedata(self, {role: 1})   # 保存数据
 
         return role, image
+
+    async def compose_without_image(self, card_1, card_2, oneclick):
+        """ 合成，返回角色名字列表 """
+        await DrawCardRule.userdata(self)  # 检测是否有群数据文件
+        DrawCardRule.get_user_data(self)  # 取用户数据
+        DrawCardRule.get_group_data(self)  # 取群数据
+
+        # 一键合成时判断是否是同级卡，抽取多余卡，从该等级抽取卡牌
+        if oneclick:
+            grade = card_1
+            card_1, card_2 = await DrawCardRule.compose_get_card(self, card_1)
+            if card_1 == 0 and card_2 == 0:
+                return "没有多余的卡用于一键合成了", 0
+
+        # 判断是否是同级卡，一键合成则此跳过
+        if not oneclick:
+            card_1_grade = get_grade(card_1)
+            card_2_grade = get_grade(card_2)
+            if card_1_grade != card_2_grade:
+                return "这两张卡不是同级卡片哟，请使用同等级卡合成~", 0
+            grade = card_1_grade
+
+            # 判断用户是否有这张卡，因为一键合成时是从用户已有卡片里抽的，所以这里一键合成的可以跳过
+            if_card_1 = DrawCardRule.if_user_role(self, card_1)
+            if_card_2 = DrawCardRule.if_user_role(self, card_2)
+
+            if not if_card_1 and not if_card_2:
+                return "这两张卡您都没有" + MessageSegment.face(174), 0
+            elif not if_card_1:
+                return "您没有这张{name}卡哟".format(name=card_1), 0
+            elif not if_card_2:
+                return "您没有这张{name}卡哟".format(name=card_2), 0
+
+            if card_1 == card_2 and self.user_role[card_1] < 2:
+                return "这张卡不够用啦！", 0
+
+        # 如果是一样的卡且用户数据里此卡数量为2，直接删除此卡
+        if card_1 == card_2 and self.user_role[card_1] == 2:
+            self.user_role.pop(card_1)
+        else:
+            self.user_role[card_1] -= 1
+            self.user_role[card_2] -= 1
+            if self.user_role[card_1] == 0:
+                self.user_role.pop(card_1)
+            if self.user_role[card_2] == 0:
+                self.user_role.pop(card_2)
+
+        # 减少卡对应的等级拥有的卡牌数
+        if grade == 1:
+            self.user_data["grade"]["grade_1"] -= 2
+        if grade == 2:
+            self.user_data["grade"]["grade_2"] -= 2
+        if grade == 3:
+            self.user_data["grade"]["grade_3"] -= 2
+
+        # 获取合成等级概率
+        if grade == 3:
+            grade = random.choices([2, 3], [0.1, 0.8])[0]
+        elif grade == 2:
+            grade = random.choices([1, 2], [0.2, 0.8])[0]
+        elif grade == 1:
+            pass   # 当等级为超稀有时，合成只会出超稀有，合成等级不变
+
+        compose_weights = dict_shuffle(
+            role_data["rules"]["weights"]["compose"]["grade_"+str(grade)])   # 对该等级的卡牌顺序进行打乱
+
+        # 抽取一张卡牌
+        role_list = []
+        role = random.choices(list(compose_weights.keys()),
+                              list(compose_weights.values()))[0]
+        role_list.append(role)
+
+        await DrawCardRule.savedata(self, {role: 1})   # 保存数据
+
+        return role, 1
 
     async def compose_get_card(self, grade):
         """ 一键合成时从用户数据里抽取两个多余的卡 """
