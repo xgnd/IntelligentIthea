@@ -250,7 +250,10 @@ async def handle_super_compose(bot: Bot, event: GroupMessageEvent):
         if not card_dict:
             await super_compose_oneclick.finish("没有多余的卡用于一键合成了")
             return
-        card_dict = OrderedDict(sorted(card_dict.items(), key=lambda card_id_and_count: get_grade(card_id_and_count[0])))
+        card_dict = OrderedDict(
+            sorted(card_dict.items(),
+                   key=lambda card_id_and_count:
+                   (get_grade(card_id_and_count[0]), -card_id_and_count[1])))
         msg = f"{MessageSegment.at(event.user_id)} 超级一键合成！\n" \
               f"{pic_composition(card_dict.keys())}\n" \
               f"------------------------------\n" \
