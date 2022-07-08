@@ -1,3 +1,5 @@
+from typing import Dict
+from collections import OrderedDict
 from pydantic import BaseSettings
 import os,json
 
@@ -41,6 +43,9 @@ class Config(BaseSettings):
     five_grade_EXP = data["rules"]["settings"]["five_grade_EXP"]
     
     poke_draw_hint = ["呀嘞呀嘞~来卡咯","别戳了别戳了，再戳就了戳晕啦","这些卡送你了~","啊啊啊啊别戳啦！","妈咪妈咪哄，看我变出了一堆卡~","哟豁~竟然出来了这么多卡"]
+
+    grade_to_grade_name: Dict[int, str] = OrderedDict(sorted({1: "超稀有", 2: "稀有", 3: "普通"}.items(), key=lambda t: t[0]))
+    grade_name_to_grade: Dict[str, int] = OrderedDict([(v, k) for k, v in grade_to_grade_name.items()])
 
     class Config:
         extra = "ignore"
